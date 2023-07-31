@@ -1,0 +1,152 @@
+<form class="firstContainer" [formGroup]="registerForm" (ngSubmit)="Register()">
+
+
+    <div class="inputs">
+
+        <h1 class="Title">Create New Account</h1>
+
+        <div class="icon">
+            <svg width="46" height="46" fill="none" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 20v-1a7 7 0 1 1 14 0v1"></path>
+                <path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"></path>
+            </svg>
+        </div>
+
+        <div class="Input">
+
+            <div class="userInput">
+                <div class="usernameIcon">
+                    <mat-icon svgIcon="user"></mat-icon>
+                </div>
+
+                <input type="text" placeholder="Username" formControlName="username">
+
+
+            </div>
+
+            <span *ngIf="
+            registerForm.controls['username'].hasError('required') &&
+            registerForm.controls['username'].touched" class="error">*Username is required
+            </span>
+
+
+            <div *ngIf='this.AllErrors["Username"]?.length > 0'>
+                <span *ngFor="let error of AllErrors['Username']" class="error">
+                    *{{error}}
+                </span>
+            </div>
+
+            <span *ngIf="this.isUsedUser" class="error">*Username is already exist
+            </span>
+
+
+        </div>
+
+
+        <div class="Input">
+            <div class="userInput">
+
+
+                <div class="usernameIcon">
+                    <mat-icon svgIcon="password"></mat-icon>
+                </div>
+                <input type="text" placeholder="Password" formControlName="password">
+            </div>
+
+            <span *ngIf="
+            registerForm.controls['password'].hasError('required') &&
+            registerForm.controls['password'].touched" class="error">*Password is required
+            </span>
+
+
+            <div *ngIf='this.AllErrors["Password"]?.length > 0'>
+                <span *ngFor="let error of AllErrors['Password']" class="error">
+                    *{{error}}
+                </span>
+            </div>
+
+
+        </div>
+
+
+        <div class="Input">
+            <div class="userInput">
+                <div class="usernameIcon">
+                    <mat-icon svgIcon="password"></mat-icon>
+                </div>
+                <input type="text" placeholder="Confrim Password" formControlName="passwordConfirm">
+            </div>
+
+            <span *ngIf="
+            registerForm.controls['passwordConfirm'].hasError('required') &&
+            registerForm.controls['passwordConfirm'].touched" class="error">*Confirm Password is required
+            </span>
+
+            <span *ngIf="!this.isMatchedPassword" class="error">*Password does not match
+            </span>
+
+        </div>
+
+
+
+
+        <div class="Input">
+            <div class="userInput">
+                <div class="usernameIcon">
+                    <mat-icon svgIcon="birthday"></mat-icon>
+                </div>
+                <input type="date" placeholder="Birthday" formControlName="dateOfBirth">
+            </div>
+
+            <span *ngIf="
+            registerForm.controls['dateOfBirth'].hasError('required') &&
+            registerForm.controls['dateOfBirth'].touched" class="error">*birthday is required
+            </span>
+
+
+        </div>
+
+
+        <div class="Input">
+            <div class="userInput">
+                <div class="usernameIcon">
+                    <mat-icon svgIcon="gender"></mat-icon>
+                </div>
+
+                <div class="SelectGender">
+                    <button class="buttonGender" (click)="SelectedGender(true)"
+                        [ngClass]="currentGender? 'Selected' : ''">
+                        <img src="../../assets/images/male.png" alt="">
+                        <h3>Male</h3>
+                    </button>
+
+
+                    <button class="buttonGender" (click)="SelectedGender(false)"
+                        [ngClass]="!currentGender? 'Selected' : ''">
+                        <img src="../../assets/images/female.png" alt="">
+                        <h3>Female</h3>
+                    </button>
+                </div>
+            </div>
+
+
+
+        </div>
+
+
+
+
+
+
+        <button class="submitButton"> Register</button>
+        <div class="routeParent">
+            <h1 class="route">Already has an account?</h1>
+            <h1 class="route link" (click)="goToLogin()">Login</h1>
+        </div>
+
+
+    </div>
+
+
+</form>

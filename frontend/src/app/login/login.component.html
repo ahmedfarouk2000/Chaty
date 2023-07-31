@@ -1,0 +1,81 @@
+<form class="firstContainer" [formGroup]="loginForm" (ngSubmit)="Login()">
+
+
+    <div class="inputs">
+
+        <h1 class="Title">Login Into Account</h1>
+
+
+        <span *ngIf="this.isWrongPassword" class="error">*Invalid username or password</span>
+
+
+        <div class="icon">
+            <img [src]="this.currentUserData?.mainPhoto.content" alt="" *ngIf="this.currentUserData.mainPhoto != null">
+
+            <img src="../../assets/images/male.png"
+                *ngIf="currentUserData?.mainPhoto == null && currentUserData?.gender" alt="">
+            <img src="../../assets/images/female.png"
+                *ngIf="currentUserData?.mainPhoto == null && !currentUserData?.gender" alt="">
+        </div>
+
+
+        <div class="Input">
+
+            <div class="userInput">
+                <div class="usernameIcon">
+                    <mat-icon svgIcon="user"></mat-icon>
+                </div>
+                <input type="text" placeholder="Username" formControlName="username">
+
+
+            </div>
+
+            <span *ngIf="
+            loginForm.controls['username'].hasError('required') &&
+            loginForm.controls['username'].touched" class="error">*Username is required
+            </span>
+
+
+
+
+
+        </div>
+
+
+        <div class="Input">
+            <div class="userInput">
+                <div class="usernameIcon">
+                    <mat-icon svgIcon="password"></mat-icon>
+                </div>
+                <input type="text" placeholder="Password" formControlName="password">
+            </div>
+
+            <span *ngIf="
+            loginForm.controls['password'].hasError('required') &&
+            loginForm.controls['password'].touched" class="error">*Password is required
+            </span>
+
+
+
+
+
+        </div>
+
+
+        <button class="submitButton"> Sign In </button>
+
+
+        <div class="routeParent">
+            <h1 class="route">New user?</h1>
+            <h1 class="route link" (click)="goToRegister()">Create an account</h1>
+        </div>
+
+        <div class="routeParent">
+            <h1 class="route">Not your account?</h1>
+            <h1 class="route link" (click)="goToAllUsers()">Select another user</h1>
+        </div>
+
+    </div>
+
+
+</form>

@@ -1,0 +1,45 @@
+.container {
+    height: 100vh;
+    background-color: #425061;
+    display: flex;
+    justify-content: center;
+}
+
+.fixed {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.chat {
+    /* width: 100px; */
+    background-color: rgba(255, 255, 255, 0.447);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 500px;
+    box-shadow: 0 0 0.5cm #0000007f;
+    border-radius: 32px;
+}
+
+
+.testParent {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-around; */
+
+
+}
+
+.child1 {
+    flex: 1;
+    /* background-color: red; */
+}
+
+.child2 {
+    flex: 1;
+    /* background-color: yellow; */
+    overflow: auto;
+}
