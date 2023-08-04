@@ -12,10 +12,11 @@ export class MyDataResolver implements Resolve<any> {
   public pageNumber = 1;
   public pageSize = 5;
   public genderToShow = false; // will show males only first
+  public orderBy = "active"; // will show males only first
 
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     console.log('aaaaaaaaaaaaaaaaaaaaaaaaa');
 
-    return this.dataService.getAllUsersData(this.pageNumber, this.pageSize, this.genderToShow);
+    return this.dataService.getAllUsersData(this.pageNumber, this.pageSize, this.genderToShow,  this.orderBy);
   }
 }

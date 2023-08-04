@@ -20,5 +20,7 @@ namespace backend.Helpers
         public int UserId { get; set; }
         public bool Gender { get; set; }
 
+        public string OrderBy { get; set; }
+
     }
 }

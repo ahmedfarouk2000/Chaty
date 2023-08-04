@@ -33,12 +33,20 @@ namespace backend.Data
 
         public async Task<PagedList<User>> GetUsers(UserParams userParams)
         {
-            // var users = context.Users.Where(p => p.Gender == false).Include(p => p.Chats).Include(p => p.MainPhoto).AsQueryable();
-            var users = context.Users.Include(p => p.Chats).Include(p => p.MainPhoto).AsQueryable();
-
-            // users = users.Where(u => u.Id != userParams.UserId); // not working bro wtf fck it
-            // Console.WriteLine(userParams.Gender);
+            var users = context.Users.Include(p => p.Chats).Include(p => p.MainPhoto)
+            .OrderByDescending(u => u.LastTimeActive).AsQueryable();
             users = users.Where(u => u.Gender == userParams.Gender); // will get this from the paramters
+
+            if(!string.IsNullOrEmpty(userParams.OrderBy)){ // there is an input
+                if(userParams.OrderBy == "created"){
+                    users =users.OrderByDescending(u => u.DateOfCreation) ;
+                }
+                else if (userParams.OrderBy == "active"){ // last active user
+                    users =users.OrderByDescending(u => u.LastTimeActive) ;
+                }
+            }
+
+
 
             return await PagedList<User>.CreateAsync(users, userParams.PageNumber, userParams.PageSize);
         }

@@ -17,6 +17,19 @@
             </div>
         </div>
 
+
+        <div class="currentFilterParent">
+            <h1>Order By: </h1>
+            <div class="nuOfChats2" (click)="ToggleOrderBy('created')" [ngClass]="this.OrderBy == 'created'?'GenderSelected': ''">
+                <!-- <mat-icon class="genderIcon" svgIcon="gender-male"></mat-icon> -->
+                <h1>created</h1>
+            </div>
+            <div class="nuOfChats2" (click)="ToggleOrderBy('active')" [ngClass]="this.OrderBy == 'active'?'GenderSelected': ''">
+                <!-- <mat-icon class="genderIcon" svgIcon="gender-female"></mat-icon> -->
+                <h1>active</h1>
+            </div>
+        </div>
+
     </div>
 
 

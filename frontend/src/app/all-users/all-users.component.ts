@@ -71,11 +71,21 @@ export class AllUsersComponent {
   }
 
 
+  public ToggleOrderBy = (toggle: string) => {
+    if (toggle != this.OrderBy) {
+      this.OrderBy = toggle;
+      this.pagination.currentPage = 1;
+      this.loadUsers();
+    }
+  }
+
+
   public SelectedGender = false; //female by dafault 
+  public OrderBy = "active"; //female by dafault 
 
 
   public loadUsers() {
-    this.dataService.getAllUsersData(this.pagination.currentPage, this.pagination.itemPerPage, this.SelectedGender).subscribe({
+    this.dataService.getAllUsersData(this.pagination.currentPage, this.pagination.itemPerPage, this.SelectedGender, this.OrderBy).subscribe({
       next: (data: PaginatedResult<any>) => {
         console.log(data)
         this.allUsers = data.result;

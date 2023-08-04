@@ -16,7 +16,7 @@ export class DataService {
 
 
 
-  public getAllUsersData(page?: number, itemsPerPage?: number, genderToShow?: boolean): Observable<any> {
+  public getAllUsersData(page?: number, itemsPerPage?: number, genderToShow?: boolean , orderBy?: string): Observable<any> {
     const paginatedResult: PaginatedResult<any> = new PaginatedResult<any>();
     // console.log('a22222222222')
     let params = new HttpParams();
@@ -27,6 +27,11 @@ export class DataService {
     if (genderToShow != null) {
       console.log('gender is not null: ', genderToShow)
       params = params.append('gender', genderToShow);
+    }
+
+    if (orderBy != null) {
+      console.log('orderBy is not null: ', genderToShow)
+      params = params.append('orderBy', orderBy);
     }
 
     return this.http.get(`${this.baseUrl}`, { observe: 'response', params }).pipe(
