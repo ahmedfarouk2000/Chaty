@@ -12,9 +12,9 @@
         <div class="icon">
             <img [src]="this.currentUserData?.mainPhoto.content" alt="" *ngIf="this.currentUserData.mainPhoto != null">
 
-            <img src="../../assets/images/male.png"
+            <img src="../../assets/images/man-2.png"
                 *ngIf="currentUserData?.mainPhoto == null && currentUserData?.gender" alt="">
-            <img src="../../assets/images/female.png"
+            <img src="../../assets/images/woman-2.png"
                 *ngIf="currentUserData?.mainPhoto == null && !currentUserData?.gender" alt="">
         </div>
 

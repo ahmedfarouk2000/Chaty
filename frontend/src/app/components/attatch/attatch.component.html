@@ -1,0 +1,64 @@
+<div
+  class="more"
+  [ngClass]="isAttatchPopUpOpen ? 'more-expand' : 'more-collapse'"
+>
+  <div class="attach-container">
+    <div class="emoji">
+      <input
+        class="inputFile"
+        (input)="sendImageMessage($event.target)"
+        type="file"
+        accept="image/*"
+      />
+      <mat-icon svgIcon="image"></mat-icon>
+    </div>
+
+    <h6 class="title">Image</h6>
+  </div>
+  <div class="attach-container">
+    <div class="emoji">
+      <input
+        class="inputFile"
+        (input)="sendVideoMessage($event.target)"
+        type="file"
+        accept="video/*"
+      />
+      <mat-icon svgIcon="film"></mat-icon>
+    </div>
+    <h6 class="title">Video</h6>
+  </div>
+
+  <!-- <div class="emoji">
+      <input
+        class="inputFile"
+        (input)="handleSoundInput($event.target)"
+        type="file"
+        accept="audio/*"
+      />
+      <mat-icon svgIcon="sound"></mat-icon>
+    </div> -->
+</div>
+
+<div
+  class="loader-wrapper"
+  *ngIf="this.isUploadingImage || this.isUploadingImageFailed"
+>
+  <span class="loader" *ngIf="this.isUploadingImage"></span>
+
+  <div class="ErrorContainer" *ngIf="this.isUploadingImageFailed">
+    <img src="../../assets/images/failedToUpload.png" alt="failed img" />
+    <h1 class="ErrorMessage">Failed to upload</h1>
+  </div>
+</div>
+
+<div
+  class="loader-wrapper"
+  *ngIf="this.isUploadingVideo || this.isUploadingVideoFailed"
+>
+  <span class="loader" *ngIf="this.isUploadingVideo"></span>
+
+  <div class="ErrorContainer" *ngIf="this.isUploadingVideoFailed">
+    <img src="../../assets/images/failedToUpload.png" alt="failed img" />
+    <h1 class="ErrorMessage">Failed to upload</h1>
+  </div>
+</div>

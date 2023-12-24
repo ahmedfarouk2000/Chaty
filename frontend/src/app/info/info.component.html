@@ -1,35 +1,25 @@
-<div class="chatInput">
-    <div class="emoji" (click)="LogOut()">
-        <mat-icon svgIcon="arrowLeft"></mat-icon>
-    </div>
-    <h1 class="title">{{this.CurrentUser?.name}}</h1>
+<div class="chatInput" (click)="ClickToOpenEditTab()">
+  <div class="emoji" (click)="backToAllUsers()">
+    <mat-icon svgIcon="arrowLeft"></mat-icon>
+  </div>
+  <h1 class="title">{{ receiverData?.name }}</h1>
 
-    <div class="emoji">
+  <div class="emoji">
+    <img
+      src="../../assets/images/man-2.png"
+      *ngIf="receiverData?.mainPhoto == null && receiverData?.gender"
+      alt=""
+    />
+    <img
+      src="../../assets/images/woman-2.png"
+      *ngIf="receiverData?.mainPhoto == null && !receiverData?.gender"
+      alt=""
+    />
 
-        <!-- <img *ngIf="!this.CurrentUser?.mainPhoto" src="../../assets/images/male.png" alt="avatar img"> -->
-
-        <img src="../../assets/images/male.png"
-            *ngIf="this.CurrentUser?.mainPhoto == null && this.CurrentUser?.gender && !this.isUploadingImage" alt="">
-        <img src="../../assets/images/female.png"
-            *ngIf="this.CurrentUser?.mainPhoto == null && !this.CurrentUser?.gender && !this.isUploadingImage" alt="">
-
-        <img *ngIf="this.CurrentUser?.mainPhoto && !this.isUploadingImage" [src]="this.CurrentUser?.mainPhoto?.content"
-            alt="avatar img">
-
-        <span *ngIf="this.isUploadingImage" class="loader"></span>
-
-
-        <div class="layer">
-            <mat-icon svgIcon="editMainPhoto"></mat-icon>
-
-            <input class="inputFile" (input)="handleMainImageInput($event.target)" type="file" accept="image/*" />
-
-        </div>
-
-
-    </div>
-
-
-
-
+    <img
+      *ngIf="receiverData?.mainPhoto"
+      [src]="receiverData?.mainPhoto?.content"
+      alt="avatar img"
+    />
+  </div>
 </div>

@@ -18,5 +18,8 @@ namespace backend.Data
         public DbSet<Chat> Chats { get; set; } // V   alues is the database name 
 
         public DbSet<MainPhoto> MainPhotos { get; set; } // all current main photos
+        public DbSet<Message> Messages {get; set;}
+
+        public DbSet<Chaty> Chatys {get; set;}
     }
 }

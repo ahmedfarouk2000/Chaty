@@ -1,0 +1,54 @@
+.InfoTab {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  /* bottom: -60px; */
+  /* height: 40px; */
+  background-color: #425061;
+  display: flex;
+  justify-content: space-between;
+  padding: 16px;
+  align-items: center;
+  border-radius: 0px 0px 32px 32px;
+  z-index: 1;
+  box-shadow: 0 0 0.2cm #0000007f;
+  transition: 0.5s all ease-in-out;
+}
+.InfoTab-closed {
+  clip-path: circle(0% at 50% 0);
+}
+
+.InfoTab-opened {
+  clip-path: circle(120% at 50% 0);
+}
+
+.emoji mat-icon {
+  width: 100%;
+  cursor: pointer;
+}
+
+.emoji {
+  transition: 0.2s ease-in;
+  cursor: pointer;
+  position: relative;
+}
+
+.emoji:hover {
+  scale: 1.1;
+}
+
+.emoji input {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  /* background-color: red; */
+  opacity: 0;
+}
+
+.textSelected {
+  font-size: 22px;
+  color: white;
+}

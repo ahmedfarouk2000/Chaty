@@ -49,35 +49,28 @@ namespace backend.Controllers
             return Ok(usersToReturn);
         }
 
-        [Authorize] //searches for the "Authorize: Bearer" in the header of the request 
+        // [Authorize] //searches for the "Authorize: Bearer" in the header of the request 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUser(int id)
         { // must make sure that the id in the url matched with the id passed in the token
 
 
-            if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
-                return Unauthorized();
+            // if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            //     return Unauthorized();
 
             var user = await repo.GetUser(id);
             var userToReturn = mapper.Map<UserToListDto>(user);
 
             return Ok(userToReturn);
         }
-        [Authorize] //searches for the "Authorize: Bearer" in the header of the request 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateUser(int id, UserToListDto userToListDto)
+        // [Authorize] //searches for the "Authorize: Bearer" in the header of the request 
+        [HttpPut("{userId}")]
+        public async Task<ActionResult<UserToListDto>> UpdateUser(int userId, UserToListDto updatedUser)
         { // must make sure also that the id passed in the url is the same as the the one embedded in the token
 
-            if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
-                return Unauthorized();
+            UserToListDto userAfterTheUpdate = await repo.updateUserData(userId, updatedUser);
+            return Ok(userAfterTheUpdate);
 
-            var userFromRepo = await repo.GetUser(id);
-            mapper.Map(userToListDto, userFromRepo);
-
-            if (await repo.SaveAll())
-                return NoContent();
-
-            throw new Exception("aaaaaaaaaaaaaaaaaaaaa7eh");
         }
 
 

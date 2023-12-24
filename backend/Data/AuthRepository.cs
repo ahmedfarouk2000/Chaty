@@ -11,6 +11,7 @@ namespace backend.Data
     {
 
         private readonly DataContext context;
+        
         public AuthRepository(DataContext context)
         {
             this.context = context;
@@ -47,7 +48,11 @@ namespace backend.Data
         public async Task<User> Register(User user, string password)
         {
             byte[] passwordHash, passwordSalt;
-            CreatePasswordHash(password, out passwordSalt, out passwordHash);
+
+
+                    CreatePasswordHash(password, 
+                    
+                    out passwordSalt, out passwordHash);
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
             await context.Users.AddAsync(user);

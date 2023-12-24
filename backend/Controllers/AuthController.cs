@@ -89,8 +89,13 @@ namespace backend.Controllers
 
             return Ok(new
             {
+                id= userFromRepo.Id,
                 token = tokenHandler.WriteToken(token),
-                id = userFromRepo.Id
+                name= userFromRepo.Name,
+                dataOfCreation = userFromRepo.DateOfCreation,
+                gender = userFromRepo.Gender,
+                lastTimeActive = userFromRepo.DateOfCreation,
+                dateOfBirth = userFromRepo.DateOfBirth,
             });
 
             // will send him the id so he can take it and 

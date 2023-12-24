@@ -46,8 +46,8 @@ namespace backend.Controllers
         [HttpPost("{userId}")]
         public async Task<IActionResult> AddPhotoForUser(int userId, [FromForm] PhotoForCreationDto photoForCreationDto)
         {
-            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
-                return Unauthorized();
+            // if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            //     return Unauthorized();       
 
             var user = await repo.GetUser(userId);
 
@@ -85,7 +85,7 @@ namespace backend.Controllers
             if (await repo.SaveAll())
             {
                 var photoToReturn = mapper.Map<PhotoForReturnDto>(photo);
-                return CreatedAtRoute("GetPhoto", new { userId = userId, id = photo.Id }, photoToReturn);
+                return Ok();
 
             }
 
@@ -98,8 +98,8 @@ namespace backend.Controllers
         [HttpPost("Videos/{userId}")]
         public async Task<IActionResult> AddVideoForUser(int userId, [FromForm] PhotoForCreationDto photoForCreationDto)
         {
-            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
-                return Unauthorized();
+            // if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            //     return Unauthorized();
 
             var user = await repo.GetUser(userId);
 
@@ -145,17 +145,17 @@ namespace backend.Controllers
 
 
 
-        [HttpGet("{id}", Name = "GetPhoto")]
-        public async Task<IActionResult> GetPhoto(int id)
-        {
+        // [HttpGet("{id}", Name = "GetPhoto")]
+        // public async Task<IActionResult> GetPhoto(int id)
+        // {
 
-            var photoFromRepo = await repo.GetPhoto(id);
+        //     var photoFromRepo = await repo.GetPhoto(id);
 
-            var photo = mapper.Map<PhotoForReturnDto>(photoFromRepo);
+        //     var photo = mapper.Map<PhotoForReturnDto>(photoFromRepo);
 
-            return Ok(photo);
+        //     return Ok(photo);
 
-        }
+        // }
 
 
 
@@ -165,8 +165,8 @@ namespace backend.Controllers
         [HttpPost("MainPhoto/{userId}")]
         public async Task<IActionResult> AddMainPhotoForUser(int userId, [FromForm] PhotoForCreationDto photoForCreationDto)
         {
-            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
-                return Unauthorized();
+            // if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            //     return Unauthorized();
 
             var user = await repo.GetUser(userId);
 

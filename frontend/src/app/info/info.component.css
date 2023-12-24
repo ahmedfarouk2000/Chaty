@@ -1,117 +1,58 @@
 .chatInput {
-    /* background-color: red; */
-    padding: 22px;
-    /* width: 50%; */
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 8px;
+  padding: 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
 }
 
 .title {
-    font-size: 22px;
-    letter-spacing: 1.5px;
-    color: black;
-
+  font-size: 22px;
+  letter-spacing: 1.5px;
+  color: black;
+  cursor: pointer;
 }
 
 .emoji img {
-    width: 32px;
-    height: 32px;
-    cursor: pointer;
-
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
 }
 
 .emoji {
-    transition: 0.2s ease-in;
-    cursor: pointer;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  transition: 0.2s ease-in;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .emojiNew {
-    width: 64px;
-    height: 64px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #425061;
-    border-radius: 50%;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #425061;
+  border-radius: 50%;
 }
 
 .emojiNew[disabled] {
-    opacity: 0.5;
-    pointer-events: none;
+  opacity: 0.5;
+  pointer-events: none;
 }
 
 .emoji:hover {
-    scale: 1.1;
+  scale: 1.1;
 }
 
 .emoji input {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    /* background-color: red; */
-    opacity: 0;
-
-}
-
-.rotate {
-    transform: rotateZ(-90deg);
-}
-
-
-.loader {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    display: inline-block;
-    border-top: 3px solid #425061;
-    border-right: 3px solid transparent;
-    box-sizing: border-box;
-    animation: rotation 1s linear infinite;
-}
-
-@keyframes rotation {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
-.layer {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 100%;
-    background-color: rgba(66, 80, 97, 0.8);
-    /* border-radius: 32px; */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: all 0.4s;
-    /* cursor: pointer; */
-
-}
-
-.layer mat-icon {
-    display: none;
-}
-
-.emoji:hover .layer mat-icon {
-    display: block;
-}
-
-
-.emoji:hover .layer {
-    bottom: 0;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  opacity: 0;
 }

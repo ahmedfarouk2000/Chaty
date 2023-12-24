@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using backend.Dtos;
 using backend.Helpers;
 using backend.Models;
 using Microsoft.EntityFrameworkCore;
@@ -88,6 +89,13 @@ namespace backend.Data
         public async Task<bool> SaveAll()
         {
             return await context.SaveChangesAsync() > 0;
+        }
+
+        public async Task<UserToListDto> updateUserData(int userId , UserToListDto updatedUser){
+            var user = await GetUser(userId);
+            context.Entry(user).CurrentValues.SetValues(updatedUser);
+            await context.SaveChangesAsync();
+            return updatedUser ;
         }
     }
 }

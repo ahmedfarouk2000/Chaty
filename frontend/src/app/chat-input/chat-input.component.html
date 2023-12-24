@@ -1,41 +1,57 @@
 <form class="chatContainer">
+  <app-info
+    [receiverData]="receiverData"
+    (onClickToOpenEdit)="ClickToToggleEdit()"
+  ></app-info>
 
+  <app-selected-messages
+    [selectedMessages]="selectedMessages"
+    (onDiscardSelectedMessages)="discardSelectedMessages()"
+    (onGetAllMessagesInBetween)="getAllMessagesInBetween()"
+  ></app-selected-messages>
 
-    <app-info></app-info>
+  <div class="blank">
+    <div
+      class="cardWrap"
+      *ngFor="let item of allMessagesBetween"
+      (click)="toggleSelectionMessage(item)"
+      [ngClass]="{
+        'flex-end': item?.messageSenderId == senderData?.id,
+        'flex-start': item?.messageSenderId !== senderData?.id,
+      }"
+    >
+      <div
+        class="layer-over"
+        [ngClass]="{
+          'layer-over-selected': isMessageSelected(item),
+          'layer-over-not-selected': !isMessageSelected(item)
+        }"
+      ></div>
 
-    <div class="InfoTab" *ngIf="CountSelectedToDelete()">
+      <div
+        class="card"
+        [ngClass]="{
+           'sender-bg'  :  item?.messageSenderId == senderData?.id,
+        }"
+      >
+        <h1 *ngIf="item?.contentType == 'text'">{{ item?.content }}</h1>
 
-        <div class="emoji" (click)="DiscardSelected()">
-            <mat-icon svgIcon="exit"></mat-icon>
-        </div>
+        <img
+          *ngIf="item?.contentType == 'image'"
+          [src]="item?.content"
+          alt="img test"
+        />
 
-        <h1 class="textSelected">{{this.AllSelectedToDelete}} Messages Selected</h1>
+        <video
+          *ngIf="item?.contentType == 'video'"
+          width="320"
+          height="240"
+          controls
+        >
+          <source [src]="item?.content" type="video/mp4" />
+        </video>
 
-        <div class="emoji" (click)="RemoveSelected()">
-            <mat-icon svgIcon="trash"></mat-icon>
-        </div>
-
-    </div>
-
-    <div class="blank">
-
-        <div class="cardWrap" [ngClass]="item.isSelected? 'green' : ''" *ngFor="let item of this.CurrentUser.chats"
-            (click)="DeleteMessage(item)">
-
-
-
-            <div class="card">
-                <h1 *ngIf="item.contentType=='text'">{{item.content}}</h1>
-
-                <img *ngIf="item.contentType=='photo'" [src]="item.content" alt="img test">
-
-                <video *ngIf="item.contentType=='video'" width="320" height="240" controls>
-                    <source [src]="item.content" type="video/mp4">
-                </video>
-
-
-
-                <div class="soundContainer" *ngIf="item.contentType=='sound'">
+        <!-- <div class="soundContainer" *ngIf="item.ContentType=='sound'">
                     <mat-icon svgIcon="play" *ngIf="!item.content.isPlaying"
                         (click)="playSound(item.content)"></mat-icon>
                     <mat-icon svgIcon="pause" *ngIf="item.content.isPlaying"
@@ -55,82 +71,48 @@
                         class="soundTime">{{ToInteger(item.content.sound.currentTime)}}:{{ToInteger(item.content.duration)}}</span>
 
 
-                </div>
+                </div> -->
 
-
-                <div class="date">
-                    <span>{{this.GetCurrentTime(item.date)[1]}}</span>
-                    <span>{{this.GetCurrentTime(item.date)[0]}}</span>
-
-                    <!-- <span>{{this.getTime() | date}}</span> -->
-                </div>
-            </div>
-
+        <div class="date">
+          <span>{{ this.GetCurrentTime(item?.date)[1] }}</span>
+          <span>{{ this.GetCurrentTime(item?.date)[0] }}</span>
         </div>
-
-
-
+      </div>
     </div>
+  </div>
 
-
-    <span class="loader" *ngIf="this.isUploadingImage"></span>
-
-    <div class="ErrorContainer" *ngIf="this.isUploadingImageFailed">
-        <img src='../../assets/images/failedToUpload.png' alt="failed img">
-        <h1 class="ErrorMessage">Failed to upload</h1>
+  <div class="chatInput">
+    <div class="emoji" (click)="this.toggleAttached()">
+      <mat-icon svgIcon="attatch"></mat-icon>
     </div>
+    <input
+      (keydown)="EnterKeyPressed($event)"
+      class="input"
+      type="text"
+      [value]="this.message"
+      placeholder="Type Message"
+      (input)="SaveValue($event)"
+    />
 
+    <button
+      class="emoji emojiNew"
+      (click)="ShowMessage()"
+      [disabled]="this.message.length == 0"
+    >
+      <mat-icon svgIcon="arrowRight"></mat-icon>
+    </button>
 
+    <app-attatch
+      [SenderData]="senderData"
+      [ReceiverData]="receiverData"
+      [isAttatchPopUpOpen]="isAttatchPopUpOpen"
+      (getAllMessagesInBetween)="getAllMessagesInBetween()"
+    ></app-attatch>
+  </div>
 
-
-    <div class="chatInput">
-
-
-        <div class="emoji" (click)="this.toggleAttached()">
-            <mat-icon svgIcon="attatch"></mat-icon>
-        </div>
-        <input (keydown)="EnterKeyPressed($event)" class="input" type="text" [value]="this.message"
-            placeholder="Type Message" (input)="SaveValue($event)">
-
-        <button class="emoji emojiNew" (click)="ShowMessage()" [disabled]="this.message.length == 0">
-            <mat-icon svgIcon="arrowRight"></mat-icon>
-        </button>
-
-
-
-        <div class="more" *ngIf="this.isAttatched">
-
-            <div class="emoji">
-                <input class="inputFile" (input)="handleImageInput($event.target ,'image')" type="file"
-                    accept="image/*" />
-                <mat-icon svgIcon="image"></mat-icon>
-            </div>
-
-            <div class="emoji">
-                <input class="inputFile" (input)="handleImageInput($event.target ,'video')" type="file"
-                    accept="video/*" />
-                <mat-icon svgIcon="video"></mat-icon>
-            </div>
-
-            <div class="emoji">
-                <input class="inputFile" (input)="handleSoundInput($event.target)" type="file" accept="audio/*" />
-                <mat-icon svgIcon="sound"></mat-icon>
-            </div>
-
-
-
-        </div>
-
-
-
-
-
-
-    </div>
-
-
-    <!-- <button (click)="Login()" style="width: 200px; height: 200px;"></button>
-
-    <h1>Welcome: {{this.CurrentUser.username}}</h1> -->
-
+  <app-user-settings
+    [UserData]="receiverData"
+    [isUserSettingsOpened]="isUserSettingsOpened"
+    (onClickToCloseEdit)="ClickToToggleEdit()"
+  ></app-user-settings>
 </form>

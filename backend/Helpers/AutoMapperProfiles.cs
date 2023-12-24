@@ -25,6 +25,12 @@ namespace backend.Helpers
             CreateMap<PhotoForCreationDto, MainPhoto>(); // for the put query
 
 
+            CreateMap<MessageDto, Message>(); // for the put query
+
+
+
+
+
             //  var photo = mapper.Map<MainPhoto>(photoForCreationDto);
         }
     }

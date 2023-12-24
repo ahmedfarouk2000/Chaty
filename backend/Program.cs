@@ -36,6 +36,7 @@ builder.Services.Configure<CloudinarySettings>(configuration.GetSection("Cloudin
 builder.Services.AddAutoMapper(typeof(DataRapository).Assembly);
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddScoped<IDataRepository, DataRapository>();
+builder.Services.AddScoped<IMessageService, MessageService>();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
     options.TokenValidationParameters = new TokenValidationParameters

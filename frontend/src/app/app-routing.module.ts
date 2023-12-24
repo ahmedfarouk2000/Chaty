@@ -7,41 +7,46 @@ import { AuthGuard } from './auth.guard';
 import { ErrorComponent } from './error/error.component';
 import { AllUsersComponent } from './all-users/all-users.component';
 import { MyDataResolver } from './resolver/dataresolver.service';
+import { UsersDataResolver } from './resolver/users-data.resolver';
 
 const routes: Routes = [
   {
+    path: '', // Empty path for the landing page
+    redirectTo: '/login',
+    pathMatch: 'full',
+  },
+  {
     path: 'users/:id',
     component: ChatInputComponent,
-    canActivate: [AuthGuard]
+    // canActivate: [AuthGuard],
+    resolve: {
+      inBetweenChatData: UsersDataResolver, // sender and receiver
+    },
   },
   {
     path: 'login',
-    component: LoginComponent
+    component: LoginComponent,
   },
   {
     path: 'register',
-    component: RegisterComponent
+    component: RegisterComponent,
   },
   {
-    path: 'users', // 
+    path: 'users',
     component: AllUsersComponent,
-    resolve: { // means this is will be fetched once i route to this page
+    resolve: {
       users: MyDataResolver,
     },
   },
-
   {
-    path: '**', // 
-    component: ErrorComponent
+    path: '**',
+    component: ErrorComponent,
   },
-
-
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
-  providers: [MyDataResolver] // Add the MyDataResolver to the providers array
-
+  providers: [MyDataResolver], // Add the MyDataResolver to the providers array
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

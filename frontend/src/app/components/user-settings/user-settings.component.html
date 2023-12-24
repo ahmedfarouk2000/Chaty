@@ -1,0 +1,117 @@
+<div
+  class="layerSettings"
+  [ngClass]="isUserSettingsOpened ? 'layerSettingsAdded' : ''"
+>
+  <div class="cancel" (click)="ClickToCloseEditTab()">
+    <mat-icon svgIcon="cancel"></mat-icon>
+  </div>
+
+  <div class="FirstSection">
+    <div class="mainImage">
+      <div class="addImageLeft">
+        <img src="../../assets/images/image-upload.png" alt="" />
+        <h1>Upload Image</h1>
+
+        <div class="layer">
+          <input
+            class="inputFile"
+            (input)="handleMainImageInput($event.target)"
+            type="file"
+            accept="image/*"
+          />
+        </div>
+      </div>
+
+      <div class="addImageRight" (click)="RemoveImage()">
+        <img src="../../assets/images/delete.png" alt="" />
+        <h1>Delete Image</h1>
+      </div>
+
+      <span *ngIf="this.isUploadingProfilePhoto" class="loader"></span>
+
+      <img
+        src="../../assets/images/man-2.png"
+        *ngIf="
+          UserDataToBeUpdated?.mainPhoto?.content == null &&
+          UserDataToBeUpdated?.gender &&
+          !this.isUploadingProfilePhoto
+        "
+        alt=""
+      />
+      <img
+        src="../../assets/images/woman-2.png"
+        *ngIf="
+          UserDataToBeUpdated?.mainPhoto?.content == null &&
+          !UserDataToBeUpdated?.gender &&
+          !this.isUploadingProfilePhoto
+        "
+        alt=""
+      />
+
+      <img
+        *ngIf="
+          UserDataToBeUpdated?.mainPhoto?.content &&
+          !this.isUploadingProfilePhoto
+        "
+        [src]="UserDataToBeUpdated?.mainPhoto?.content"
+        alt="avatar img"
+      />
+    </div>
+    <h1>{{ UserDataToBeUpdated?.name }}</h1>
+  </div>
+
+  <div class="containFields">
+    <img class="imageIcon" src="../../assets/images/baby-1.png" alt="" />
+    <h4>Date Of Creation: {{ UserDataToBeUpdated?.dateOfCreation | date }}</h4>
+  </div>
+
+  <div class="containFields">
+    <img
+      class="imageIcon"
+      src="../../assets/images/birthday-cake-1.png"
+      alt=""
+    />
+    <h4>Date Of Birth: {{ UserDataToBeUpdated?.dateOfBirth | date }}</h4>
+
+    <div class="editContainer">
+      <img class="edit" src="../../assets/images/edit.png" alt="" />
+      <input
+        type="date"
+        placeholder="Birthday"
+        (change)="ChangeBirthday($event.target)"
+      />
+    </div>
+  </div>
+
+  <div class="genderSelection">
+    <div
+      class="currentGender"
+      [ngClass]="UserDataToBeUpdated?.gender ? 'BorderSelected' : ''"
+      (click)="ChangeGender(true)"
+    >
+      <h1
+        class="genderText"
+        [ngClass]="UserDataToBeUpdated?.gender ? 'male' : ''"
+      >
+        Male
+      </h1>
+      <img src="../../assets/images/man-2.png" alt="" />
+    </div>
+
+    <div
+      class="currentGender"
+      [ngClass]="!UserDataToBeUpdated?.gender ? 'BorderSelected' : ''"
+      (click)="ChangeGender(false)"
+    >
+      <h1
+        class="genderText"
+        [ngClass]="!UserDataToBeUpdated?.gender ? 'female' : ''"
+      >
+        Female
+      </h1>
+      <img src="../../assets/images/woman-2.png" alt="" />
+    </div>
+  </div>
+
+  <button class="submitButton" (click)="updateUserData()">Save Changes</button>
+</div>

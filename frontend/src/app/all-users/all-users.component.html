@@ -1,124 +1,152 @@
 <div class="chatContainer">
+  <div class="header">
+    <img src="../../assets/images/chat-bot.png" alt="" />
+    <div class="header-wrapper">
+      <h1>Welcome back {{ getSenderName }}</h1>
+      <!-- <h1 class="name">{{ getCurrentLogedUser }}</h1> -->
+    </div>
+  </div>
 
-    <div class="header">
-        <img src="../../assets/images/chat-bot.png" alt="">
-        <h1>Welcome to Chaty</h1>
+  <div class="filters">
+    <div class="currentFilterParent">
+      <h1>Gender:</h1>
+      <div
+        class="nuOfChats2"
+        (click)="ToggleGender(true)"
+        [ngClass]="this.SelectedGender ? 'GenderSelected' : ''"
+      >
+        <mat-icon class="genderIcon" svgIcon="gender-male"></mat-icon>
+      </div>
+      <div
+        class="nuOfChats2"
+        (click)="ToggleGender(false)"
+        [ngClass]="!this.SelectedGender ? 'GenderSelected' : ''"
+      >
+        <mat-icon class="genderIcon" svgIcon="gender-female"></mat-icon>
+      </div>
     </div>
 
-    <div class="filters">
+    <div class="currentFilterParent">
+      <h1>Order By:</h1>
+      <div
+        class="nuOfChats2"
+        (click)="ToggleOrderBy('created')"
+        [ngClass]="this.OrderBy == 'created' ? 'GenderSelected' : ''"
+      >
+        <!-- <mat-icon class="genderIcon" svgIcon="gender-male"></mat-icon> -->
+        <h1>created</h1>
+      </div>
+      <div
+        class="nuOfChats2"
+        (click)="ToggleOrderBy('active')"
+        [ngClass]="this.OrderBy == 'active' ? 'GenderSelected' : ''"
+      >
+        <!-- <mat-icon class="genderIcon" svgIcon="gender-female"></mat-icon> -->
+        <h1>active</h1>
+      </div>
+    </div>
+  </div>
 
-        <div class="currentFilterParent">
-            <h1>Gender: </h1>
-            <div class="nuOfChats2" (click)="ToggleGender(true)" [ngClass]="this.SelectedGender?'GenderSelected': ''">
-                <mat-icon class="genderIcon" svgIcon="gender-male"></mat-icon>
-            </div>
-            <div class="nuOfChats2" (click)="ToggleGender(false)" [ngClass]="!this.SelectedGender?'GenderSelected': ''">
-                <mat-icon class="genderIcon" svgIcon="gender-female"></mat-icon>
-            </div>
+  <div class="alluser">
+    <div
+      class="userCard"
+      *ngFor="let currentUser of this.allUsers"
+      (click)="selectChat(currentUser)"
+    >
+      <div class="left">
+        <img
+          [src]="currentUser.mainPhoto?.content"
+          *ngIf="currentUser.mainPhoto?.content != null"
+          alt=""
+        />
+        <img
+          src="../../assets/images/man-2.png"
+          *ngIf="currentUser.mainPhoto == null && currentUser.gender"
+          alt=""
+        />
+        <img
+          src="../../assets/images/woman-2.png"
+          *ngIf="currentUser.mainPhoto == null && !currentUser.gender"
+          alt=""
+        />
+      </div>
+      <div class="right">
+        <h1 class="cardName">{{ currentUser.name }}</h1>
+
+        <div class="containerFlex">
+          <div class="nuOfChats">
+            <mat-icon svgIcon="chat"></mat-icon>
+            <h3>{{ currentUser.chats.length }}</h3>
+          </div>
+
+          <div class="nuOfChats">
+            <mat-icon svgIcon="cake"></mat-icon>
+            <h3>{{ currentUser.dateOfBirth | date }}</h3>
+          </div>
+
+          <div class="nuOfChats">
+            <mat-icon
+              class="genderIcon"
+              svgIcon="gender-male"
+              *ngIf="currentUser.gender"
+            ></mat-icon>
+            <mat-icon
+              class="genderIcon"
+              svgIcon="gender-female"
+              *ngIf="!currentUser.gender"
+            ></mat-icon>
+          </div>
         </div>
 
+        <h1 class="lastTime">
+          Last Time Active: {{ currentUser.lastTimeActive | dateAgo }}
+        </h1>
+        <h1 class="lastTime">
+          Date of Creation: {{ currentUser.dateOfCreation | date }}
+        </h1>
+      </div>
 
-        <div class="currentFilterParent">
-            <h1>Order By: </h1>
-            <div class="nuOfChats2" (click)="ToggleOrderBy('created')" [ngClass]="this.OrderBy == 'created'?'GenderSelected': ''">
-                <!-- <mat-icon class="genderIcon" svgIcon="gender-male"></mat-icon> -->
-                <h1>created</h1>
-            </div>
-            <div class="nuOfChats2" (click)="ToggleOrderBy('active')" [ngClass]="this.OrderBy == 'active'?'GenderSelected': ''">
-                <!-- <mat-icon class="genderIcon" svgIcon="gender-female"></mat-icon> -->
-                <h1>active</h1>
-            </div>
-        </div>
+      <div class="blobBottom"></div>
+      <div class="blobTop"></div>
+    </div>
+  </div>
 
+  <div class="pages">
+    <div class="currentPage" (click)="GotoPage(1)">
+      <mat-icon svgIcon="arrowLeftDouble"></mat-icon>
     </div>
 
-
-
-    <div class="alluser">
-
-        <div class="userCard" *ngFor="let currentUser of this.allUsers"
-            (click)="this.updateSelectedUserData(currentUser)">
-
-            <div class="left">
-                <img [src]="currentUser.mainPhoto?.content" *ngIf="currentUser.mainPhoto?.content !=null" alt="">
-                <img src="../../assets/images/male.png" *ngIf="currentUser.mainPhoto == null && currentUser.gender"
-                    alt="">
-                <img src="../../assets/images/female.png" *ngIf="currentUser.mainPhoto == null && !currentUser.gender"
-                    alt="">
-            </div>
-            <div class="right">
-                <h1 class="cardName">{{currentUser.name}}</h1>
-
-
-                <div class="containerFlex">
-                    <div class="nuOfChats">
-                        <mat-icon svgIcon="chat"></mat-icon>
-                        <h3>{{currentUser.chats.length}}</h3>
-                    </div>
-
-                    <div class="nuOfChats">
-                        <mat-icon svgIcon="cake"></mat-icon>
-                        <h3>{{currentUser.dateOfBirth | date }}</h3>
-                    </div>
-
-                    <div class="nuOfChats">
-                        <mat-icon class="genderIcon" svgIcon="gender-male" *ngIf="currentUser.gender"></mat-icon>
-                        <mat-icon class="genderIcon" svgIcon="gender-female" *ngIf="!currentUser.gender"></mat-icon>
-                    </div>
-                </div>
-
-                <h1 class="lastTime">Last Time Active: {{currentUser.lastTimeActive | dateAgo}}</h1>
-                <h1 class="lastTime">Date of Creation: {{currentUser.dateOfCreation | date}}</h1>
-
-
-            </div>
-
-            <div class="blobBottom"></div>
-            <div class="blobTop"></div>
-
-        </div>
-
-
-
-
+    <div
+      class="currentPage"
+      (click)="GotoPage(this.pagination.currentPage - 1)"
+    >
+      <mat-icon svgIcon="arrowLeft"></mat-icon>
     </div>
 
-
-    <div class="pages">
-
-
-        <div class="currentPage" (click)="GotoPage(1)">
-            <mat-icon svgIcon="arrowLeftDouble"></mat-icon>
-        </div>
-
-        <div class="currentPage" (click)="GotoPage(this.pagination.currentPage - 1)">
-            <mat-icon svgIcon="arrowLeft"></mat-icon>
-        </div>
-
-
-
-        <div [ngClass]="i + 1 == pagination.currentPage? 'red' : ''" (click)="GotoPage(i + 1)" class="currentPage"
-            *ngFor="let currentPage of numSequence(this.pagination.totalPages); let i = index;">
-            {{i + 1}}
-        </div>
-
-        <div class="currentPage rotate" (click)="GotoPage(this.pagination.currentPage + 1)">
-            <mat-icon svgIcon="arrowLeft"></mat-icon>
-        </div>
-
-        <div class="currentPage rotate" (click)="GotoPage(this.pagination.totalPages)">
-            <mat-icon svgIcon="arrowLeftDouble"></mat-icon>
-        </div>
-
-
-
-
-
+    <div
+      [ngClass]="i + 1 == pagination.currentPage ? 'red' : ''"
+      (click)="GotoPage(i + 1)"
+      class="currentPage"
+      *ngFor="
+        let currentPage of numSequence(this.pagination.totalPages);
+        let i = index
+      "
+    >
+      {{ i + 1 }}
     </div>
 
+    <div
+      class="currentPage rotate"
+      (click)="GotoPage(this.pagination.currentPage + 1)"
+    >
+      <mat-icon svgIcon="arrowLeft"></mat-icon>
+    </div>
 
-
-
-
-
+    <div
+      class="currentPage rotate"
+      (click)="GotoPage(this.pagination.totalPages)"
+    >
+      <mat-icon svgIcon="arrowLeftDouble"></mat-icon>
+    </div>
+  </div>
 </div>

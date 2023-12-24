@@ -1,0 +1,17 @@
+<div
+  class="InfoTab"
+  [ngClass]="{
+    'InfoTab-closed': selectedMessages?.length == 0,
+    'InfoTab-opened': selectedMessages?.length > 0
+  }"
+>
+  <div class="emoji" (click)="discardSelectedMessages()">
+    <mat-icon svgIcon="exit"></mat-icon>
+  </div>
+
+  <h1 class="textSelected">{{ selectedMessages?.length }} Messages Selected</h1>
+
+  <div class="emoji" (click)="deleteSelectedMessages()">
+    <mat-icon svgIcon="trash"></mat-icon>
+  </div>
+</div>
