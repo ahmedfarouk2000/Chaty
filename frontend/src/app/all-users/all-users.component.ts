@@ -68,6 +68,7 @@ export class AllUsersComponent {
   public loadUsers() {
     this.dataService
       .getAllUsersData(
+        this.getCurrentUser(),
         this.pagination.currentPage,
         this.pagination.itemPerPage,
         this.SelectedGender,
@@ -91,5 +92,15 @@ export class AllUsersComponent {
 
   get getSenderName() {
     return this.authService.getSenderName();
+  }
+
+  getCurrentUser(): number {
+    if (!this.authService.getSenderData()) {
+      let storedUserJsonString = localStorage.getItem('SenderData');
+      let storedUser: User = JSON.parse(storedUserJsonString);
+      return storedUser?.id;
+    } else {
+      return this.authService.getSenderId();
+    }
   }
 }

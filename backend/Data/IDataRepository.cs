@@ -20,5 +20,8 @@ namespace backend.Data
         Task<MainPhoto> GetMainPhoto(int id);
         Task<bool> DeleteMainPhoto(int id);
         Task<UserToListDto> updateUserData(int userId , UserToListDto updatedUser);
+        Task<User> updateUserLastTimeActive(int userId) ;
+
+        Task<MainPhoto> RemoveMainPhoto(int userId);
     }
 }

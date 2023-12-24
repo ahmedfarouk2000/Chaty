@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../Services/auth.service';
 import { User } from '../models/user';
+import { DataService } from '../Services/data.service';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,8 @@ export class LoginComponent {
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
+    private dataService: DataService
   ) {}
   public currentUserData: any = '';
 
@@ -51,6 +53,7 @@ export class LoginComponent {
           // localStorage.setItem("id", data.id)
           this.router.navigate([`/users`]);
           this.authService.updateSenderUser(data);
+          this.updateUserLastTimeActive(data.id);
         },
         error: (data: any) => {
           // here will not return a token :(
@@ -59,5 +62,11 @@ export class LoginComponent {
         },
       });
     }
+  };
+
+  updateUserLastTimeActive = (userId: number) => {
+    this.dataService.updateUserLastTimeActive(userId).subscribe((res) => {
+      console.log('last time is updated man: ', res);
+    });
   };
 }

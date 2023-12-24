@@ -15,14 +15,14 @@
         <div class="layer">
           <input
             class="inputFile"
-            (input)="handleMainImageInput($event.target)"
+            (input)="handleMainPhotoInput($event.target)"
             type="file"
             accept="image/*"
           />
         </div>
       </div>
 
-      <div class="addImageRight" (click)="RemoveImage()">
+      <div class="addImageRight" (click)="removeMainPhoto()">
         <img src="../../assets/images/delete.png" alt="" />
         <h1>Delete Image</h1>
       </div>

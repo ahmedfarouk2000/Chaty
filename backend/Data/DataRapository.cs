@@ -36,7 +36,7 @@ namespace backend.Data
         {
             var users = context.Users.Include(p => p.Chats).Include(p => p.MainPhoto)
             .OrderByDescending(u => u.LastTimeActive).AsQueryable();
-            users = users.Where(u => u.Gender == userParams.Gender); // will get this from the paramters
+            users = users.Where(u => u.Gender == userParams.Gender && u.Id !=userParams.UserId); // will get this from the paramters
 
             if(!string.IsNullOrEmpty(userParams.OrderBy)){ // there is an input
                 if(userParams.OrderBy == "created"){
@@ -68,6 +68,26 @@ namespace backend.Data
             return MainPhoto;
         }
 
+
+        public async Task<MainPhoto> GetMainPhotoByUserId(int userId)
+        {
+            var MainPhoto = await context.MainPhotos.FirstOrDefaultAsync(p => p.UserId == userId);
+
+            return MainPhoto;
+        }
+
+        public async Task<MainPhoto> RemoveMainPhoto(int userId)
+        {
+            var mainPhotoToRemove = await GetMainPhotoByUserId(userId);
+
+            if(mainPhotoToRemove != null){
+                context.MainPhotos.Remove(mainPhotoToRemove);
+                await context.SaveChangesAsync() ;
+            }
+            
+            return mainPhotoToRemove;
+        }
+
         public async Task<bool> DeleteMainPhoto(int id)
         {
             var MainPhoto = await context.MainPhotos.FirstOrDefaultAsync(p => p.UserId == id);
@@ -96,6 +116,14 @@ namespace backend.Data
             context.Entry(user).CurrentValues.SetValues(updatedUser);
             await context.SaveChangesAsync();
             return updatedUser ;
+        }
+
+
+         public async Task<User> updateUserLastTimeActive(int userId){
+            var user = await GetUser(userId);
+            user.LastTimeActive = DateTime.Now;
+            await context.SaveChangesAsync();
+            return user;
         }
     }
 }

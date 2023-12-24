@@ -12,7 +12,7 @@ export class UserSettingsComponent {
   @Input() UserData: User;
   @Input() isUserSettingsOpened: boolean;
   @Output() onClickToCloseEdit: EventEmitter<any> = new EventEmitter<any>();
-
+  // must also know who that data to update thus I can know to replace its data in the localstorage
   ClickToCloseEditTab() {
     this.UserDataToBeUpdated = { ...this.UserData };
     this.onClickToCloseEdit.emit();
@@ -26,6 +26,7 @@ export class UserSettingsComponent {
     dateOfBirth: new Date(),
     dateOfCreation: new Date(),
     lastTimeActive: new Date(),
+    mainPhoto: null,
   };
 
   constructor(
@@ -38,7 +39,7 @@ export class UserSettingsComponent {
     this.UserDataToBeUpdated = { ...this.UserData };
   }
 
-  handleMainImageInput = (input: any) => {
+  handleMainPhotoInput = (input: any) => {
     // not working as well
     if (input.files && input.files[0]) {
       const file = input.files[0] as File;
@@ -52,9 +53,9 @@ export class UserSettingsComponent {
           .updateUserMainPhoto(this.UserData?.id, formData)
           .subscribe({
             next: (data: any) => {
-              this.UserDataToBeUpdated.mainPhoto.content = data.content;
               console.log('the data from upload is: ', data);
-              this.isUploadingProfilePhoto = false;
+              this.UserDataToBeUpdated.mainPhoto = data;
+              // this.isUploadingProfilePhoto = false;
               this.UserData.mainPhoto = data;
               this.authService.updateReceiverUser(this.UserData);
               localStorage.setItem(
@@ -65,6 +66,9 @@ export class UserSettingsComponent {
             },
             error: (error: any) => {
               console.log('erorrrrrrrr', error);
+              this.isUploadingProfilePhoto = false;
+            },
+            complete: () => {
               this.isUploadingProfilePhoto = false;
             },
           });
@@ -82,9 +86,32 @@ export class UserSettingsComponent {
     this.UserDataToBeUpdated.dateOfBirth = new Date(input.value);
   };
 
-  RemoveImage = () => {
-    // this does not working must create another endpoint
-    this.UserDataToBeUpdated.mainPhoto = null;
+  removeMainPhoto = () => {
+    this.isUploadingProfilePhoto = true;
+    this.dataService.removeUserMainPhoto(this.UserData?.id).subscribe({
+      next: (data: any) => {
+        setTimeout(() => {
+          console.log('on remove user photo: ', data);
+          this.UserDataToBeUpdated.mainPhoto = null;
+          // this.isUploadingProfilePhoto = false;
+          this.UserData.mainPhoto = null;
+          this.authService.updateReceiverUser(this.UserData);
+          localStorage.setItem('ReceiverData', JSON.stringify(this.UserData));
+          this.UserDataToBeUpdated = { ...this.UserData };
+        }, 2000);
+      },
+      error: () => {
+        setTimeout(() => {
+          this.isUploadingProfilePhoto = false;
+        }, 2000);
+      },
+      complete: () => {
+        setTimeout(() => {
+          this.isUploadingProfilePhoto = false;
+        }, 2000);
+      },
+    });
+    // this.UserDataToBeUpdated.mainPhoto = null;
   };
 
   updateUserData() {

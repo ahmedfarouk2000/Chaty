@@ -16,7 +16,7 @@ using Microsoft.Extensions.Options;
 
 namespace backend.Controllers
 {
-    [Authorize] //searches for the "Authorize: Bearer" in the header of the request 
+    // [Authorize] //searches for the "Authorize: Bearer" in the header of the request 
     [Route("[controller]")]
     [ApiController]
 
@@ -226,6 +226,14 @@ namespace backend.Controllers
             return Ok(photo);
 
         }
+
+
+        [HttpGet("MainPhoto/Remove/{userId}")]
+        public async Task<IActionResult> RemoveMainPhotoForUser(int userId){
+            var removedPhoto = await repo.RemoveMainPhoto(userId) ;
+            return Ok(removedPhoto) ;
+        }
+
 
 
 

@@ -89,12 +89,12 @@ export class ChatInputComponent {
     });
   }
 
-  public updateLastTimeActive = () => {
-    const currentDate = new Date();
-    currentDate.setHours(currentDate.getHours() + 3);
-    this.CurrentUser.lastTimeActive = currentDate.toISOString().slice(0, 19);
-    this.updateUserData();
-  };
+  // public updateLastTimeActive = () => {
+  //   const currentDate = new Date();
+  //   currentDate.setHours(currentDate.getHours() + 3);
+  //   this.CurrentUser.lastTimeActive = currentDate.toISOString().slice(0, 19);
+  //   this.updateUserData();
+  // };
 
   getAllMessagesInBetween() {
     // NEW

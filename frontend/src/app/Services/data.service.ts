@@ -3,6 +3,7 @@ import { Observable, map } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { PaginatedResult } from '../models/pagination';
 import { User } from '../models/user';
+import { mainPhoto } from '../models/mainPhoto';
 
 @Injectable({
   providedIn: 'root',
@@ -13,6 +14,7 @@ export class DataService {
   constructor(private http: HttpClient) {}
 
   public getAllUsersData(
+    userId: number,
     page?: number,
     itemsPerPage?: number,
     genderToShow?: boolean,
@@ -34,6 +36,8 @@ export class DataService {
       console.log('orderBy is not null: ', genderToShow);
       params = params.append('orderBy', orderBy);
     }
+
+    params = params.append('userId', userId);
 
     return this.http
       .get(`${this.baseUrl}`, { observe: 'response', params })
@@ -59,6 +63,13 @@ export class DataService {
     return this.http.put(`${this.baseUrl}/${user?.id}`, user);
   }
 
+  updateUserLastTimeActive(userId: number): Observable<User> {
+    return this.http.put<User>(
+      `${this.baseUrl}/UpdateLastTimeActive/${userId}`,
+      null
+    );
+  }
+
   public baseUrlPhoto: string = 'http://localhost:5288/Photos';
   public updateUserPhotos(id: number, File: any): Observable<any> {
     return this.http.post(`${this.baseUrlPhoto}/${id}`, File);
@@ -71,7 +82,10 @@ export class DataService {
 
   public baseUrlMainPhoto: string = 'http://localhost:5288/Photos/MainPhoto';
   public updateUserMainPhoto(id: number, File: any): Observable<any> {
-    console.log('in update main photo');
     return this.http.post(`${this.baseUrlMainPhoto}/${id}`, File);
+  }
+
+  removeUserMainPhoto(useId: number): Observable<mainPhoto> {
+    return this.http.get<mainPhoto>(`${this.baseUrlMainPhoto}/Remove/${useId}`);
   }
 }

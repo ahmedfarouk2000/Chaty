@@ -1,4 +1,4 @@
 export interface mainPhoto {
   content: string;
-  data: Date;
+  date: Date;
 }

@@ -9,7 +9,8 @@ using backend.Dtos;
 using backend.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using backend.Helpers; // Add the using statement to import the Extensions class
+using backend.Helpers;
+using backend.Models; // Add the using statement to import the Extensions class
 
 
 namespace backend.Controllers
@@ -71,6 +72,12 @@ namespace backend.Controllers
             UserToListDto userAfterTheUpdate = await repo.updateUserData(userId, updatedUser);
             return Ok(userAfterTheUpdate);
 
+        }
+
+        [HttpPut("UpdateLastTimeActive/{userId}")]
+        public async Task<ActionResult> updateUserLastTimeActive(int userId){
+            User updateUser = await repo.updateUserLastTimeActive(userId) ;
+            return Ok(updateUser);
         }
 
 
