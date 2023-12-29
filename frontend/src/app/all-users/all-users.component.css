@@ -242,3 +242,21 @@
 .rotate {
   transform: rotateY(180deg);
 }
+
+.mainImage img {
+  width: 100%;
+}
+
+.mainImage {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  outline: white 4px solid;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 6px;
+  cursor: pointer;
+}

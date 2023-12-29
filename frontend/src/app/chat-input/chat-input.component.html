@@ -113,6 +113,7 @@
   <app-user-settings
     [UserData]="receiverData"
     [isUserSettingsOpened]="isUserSettingsOpened"
+    [senderId]="senderData.id"
     (onClickToCloseEdit)="ClickToToggleEdit()"
   ></app-user-settings>
 </form>

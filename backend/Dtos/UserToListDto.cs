@@ -11,7 +11,7 @@ namespace backend.Dtos
 
         public int Id { get; set; }
         public string Name { get; set; }
-        public ICollection<Chat> Chats { get; set; }
+        // public ICollection<Chat> Chats { get; set; }
         public MainPhoto? MainPhoto { get; set; } // used to display the image of the user 
 
         public DateTime DateOfCreation { get; set; } // not null  

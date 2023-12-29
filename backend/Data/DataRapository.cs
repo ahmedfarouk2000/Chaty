@@ -53,12 +53,12 @@ namespace backend.Data
         }
 
 
-        public async Task<Chat> GetPhoto(int id)
-        {
-            var photo = await context.Chats.FirstOrDefaultAsync(p => p.Id == id);
+        // public async Task<Chat> GetPhoto(int id)
+        // {
+        //     var photo = await context.Chats.FirstOrDefaultAsync(p => p.Id == id);
 
-            return photo;
-        }
+        //     return photo;
+        // }
 
 
         public async Task<MainPhoto> GetMainPhoto(int id)

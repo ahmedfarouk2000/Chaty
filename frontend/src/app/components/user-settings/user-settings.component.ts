@@ -11,6 +11,7 @@ import { User } from 'src/app/models/user';
 export class UserSettingsComponent {
   @Input() UserData: User;
   @Input() isUserSettingsOpened: boolean;
+  @Input() senderId: number; // to know if current user is the user thats login thus I can edit the data
   @Output() onClickToCloseEdit: EventEmitter<any> = new EventEmitter<any>();
   // must also know who that data to update thus I can know to replace its data in the localstorage
   ClickToCloseEditTab() {
@@ -58,10 +59,7 @@ export class UserSettingsComponent {
               // this.isUploadingProfilePhoto = false;
               this.UserData.mainPhoto = data;
               this.authService.updateReceiverUser(this.UserData);
-              localStorage.setItem(
-                'ReceiverData',
-                JSON.stringify(this.UserData)
-              );
+              localStorage.setItem('SenderData', JSON.stringify(this.UserData));
               this.UserDataToBeUpdated = { ...this.UserData };
             },
             error: (error: any) => {
@@ -79,7 +77,9 @@ export class UserSettingsComponent {
   };
 
   ChangeGender = (gender: boolean) => {
-    this.UserDataToBeUpdated.gender = gender;
+    if (this.canEditInfo) {
+      this.UserDataToBeUpdated.gender = gender;
+    }
   };
 
   ChangeBirthday = (input: any) => {
@@ -96,7 +96,7 @@ export class UserSettingsComponent {
           // this.isUploadingProfilePhoto = false;
           this.UserData.mainPhoto = null;
           this.authService.updateReceiverUser(this.UserData);
-          localStorage.setItem('ReceiverData', JSON.stringify(this.UserData));
+          localStorage.setItem('SenderData', JSON.stringify(this.UserData));
           this.UserDataToBeUpdated = { ...this.UserData };
         }, 2000);
       },
@@ -115,12 +115,13 @@ export class UserSettingsComponent {
   };
 
   updateUserData() {
+    console.log('the data to be updated is: ', this.UserDataToBeUpdated);
     this.dataService.updateUserData(this.UserDataToBeUpdated).subscribe({
       next: (data: User) => {
         console.log('the data returned after the removal is: ', data);
         this.UserData = data;
         this.authService.updateReceiverUser(data);
-        localStorage.setItem('ReceiverData', JSON.stringify(data));
+        localStorage.setItem('SenderData', JSON.stringify(data));
         this.UserDataToBeUpdated = { ...data };
         this.ClickToCloseEditTab();
       },
@@ -128,5 +129,10 @@ export class UserSettingsComponent {
         console.log('errrrrrrrror from update');
       },
     });
+  }
+
+  get canEditInfo() {
+    // if true can edit
+    return this.UserData?.id == this.senderId;
   }
 }

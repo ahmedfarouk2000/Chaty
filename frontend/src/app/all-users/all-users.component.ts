@@ -17,8 +17,9 @@ export class AllUsersComponent {
     private authService: AuthService,
     private router: Router
   ) {}
-  public allUsers: any;
-  public pagination: Pagination;
+  allUsers: any;
+  pagination: Pagination;
+  isUserSettingsOpened: boolean = false;
 
   ngOnInit() {
     this.route.data.subscribe((data) => {
@@ -28,13 +29,13 @@ export class AllUsersComponent {
     });
   }
 
-  public selectChat = (currentUser: User) => {
+  selectChat = (currentUser: User) => {
     this.authService.updateReceiverUser(currentUser);
     this.router.navigate([`/users/${currentUser?.id}`]);
     localStorage.setItem('ReceiverData', JSON.stringify(currentUser));
   };
 
-  public GotoPage = (currentPage: any) => {
+  GotoPage = (currentPage: any) => {
     if (currentPage == 0) {
       currentPage = 1;
     } else if (currentPage > this.pagination.totalPages) {
@@ -46,7 +47,7 @@ export class AllUsersComponent {
     }
   };
 
-  public ToggleGender = (toggle: boolean) => {
+  ToggleGender = (toggle: boolean) => {
     if (toggle != this.SelectedGender) {
       this.SelectedGender = toggle;
       this.pagination.currentPage = 1;
@@ -54,7 +55,7 @@ export class AllUsersComponent {
     }
   };
 
-  public ToggleOrderBy = (toggle: string) => {
+  ToggleOrderBy = (toggle: string) => {
     if (toggle != this.OrderBy) {
       this.OrderBy = toggle;
       this.pagination.currentPage = 1;
@@ -62,13 +63,13 @@ export class AllUsersComponent {
     }
   };
 
-  public SelectedGender = false; //female by dafault
-  public OrderBy = 'active'; //female by dafault
+  SelectedGender = false; //female by dafault
+  OrderBy = 'active'; //female by dafault
 
-  public loadUsers() {
+  loadUsers() {
     this.dataService
       .getAllUsersData(
-        this.getCurrentUser(),
+        this.currentUser?.id,
         this.pagination.currentPage,
         this.pagination.itemPerPage,
         this.SelectedGender,
@@ -86,21 +87,21 @@ export class AllUsersComponent {
       });
   }
 
-  public numSequence(n: number): Array<number> {
+  numSequence(n: number): Array<number> {
     return Array(n);
   }
 
-  get getSenderName() {
-    return this.authService.getSenderName();
-  }
-
-  getCurrentUser(): number {
+  get currentUser(): User {
     if (!this.authService.getSenderData()) {
       let storedUserJsonString = localStorage.getItem('SenderData');
       let storedUser: User = JSON.parse(storedUserJsonString);
-      return storedUser?.id;
+      return storedUser;
     } else {
-      return this.authService.getSenderId();
+      return this.authService.getSenderData();
     }
   }
+
+  ClickToToggleEdit = () => {
+    this.isUserSettingsOpened = !this.isUserSettingsOpened;
+  };
 }

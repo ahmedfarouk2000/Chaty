@@ -1,8 +1,35 @@
 <div class="chatContainer">
   <div class="header">
-    <img src="../../assets/images/chat-bot.png" alt="" />
+    <!-- <img src="../../assets/images/chat-bot.png" alt="" /> -->
+
+    <div class="mainImage" (click)="ClickToToggleEdit()">
+      <img
+        src="../../assets/images/man-2.png"
+        *ngIf="currentUser?.mainPhoto == null && currentUser?.gender"
+        alt=""
+      />
+      <img
+        src="../../assets/images/woman-2.png"
+        *ngIf="currentUser?.mainPhoto == null && !currentUser?.gender"
+        alt=""
+      />
+
+      <img
+        *ngIf="currentUser?.mainPhoto"
+        [src]="currentUser?.mainPhoto?.content"
+        alt="avatar img"
+      />
+    </div>
+
+    <app-user-settings
+      [UserData]="currentUser"
+      [isUserSettingsOpened]="isUserSettingsOpened"
+      [senderId]="currentUser.id"
+      (onClickToCloseEdit)="ClickToToggleEdit()"
+    ></app-user-settings>
+
     <div class="header-wrapper">
-      <h1>Welcome back {{ getSenderName }}</h1>
+      <h1>Welcome back {{ currentUser?.name }}</h1>
       <!-- <h1 class="name">{{ getCurrentLogedUser }}</h1> -->
     </div>
   </div>
@@ -76,7 +103,7 @@
         <div class="containerFlex">
           <div class="nuOfChats">
             <mat-icon svgIcon="chat"></mat-icon>
-            <h3>{{ currentUser.chats.length }}</h3>
+            <h3>{{ currentUser?.chats?.length }}</h3>
           </div>
 
           <div class="nuOfChats">

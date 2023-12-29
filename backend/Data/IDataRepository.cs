@@ -15,7 +15,7 @@ namespace backend.Data
         Task<bool> SaveAll();
         Task<PagedList<User>> GetUsers(UserParams userParams);
         Task<User> GetUser(int id);
-        Task<Chat> GetPhoto(int id);
+        // Task<Chat> GetPhoto(int id);
 
         Task<MainPhoto> GetMainPhoto(int id);
         Task<bool> DeleteMainPhoto(int id);
