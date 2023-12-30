@@ -12,6 +12,8 @@ using backend.Models;
 using Dtos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using AutoMapper;
+
 
 namespace backend.Controllers
 {
@@ -21,10 +23,12 @@ namespace backend.Controllers
     {
         private readonly IAuthRepository repo;
         private readonly IConfiguration config;
-        public AuthController(IAuthRepository repo, IConfiguration config)
+        private readonly IMapper mapper;
+        public AuthController(IAuthRepository repo, IConfiguration config, IMapper mapper)
         {
             this.repo = repo;
             this.config = config;
+            this.mapper = mapper;
         }
 
 
@@ -92,11 +96,16 @@ namespace backend.Controllers
                 id= userFromRepo.Id,
                 token = tokenHandler.WriteToken(token),
                 name= userFromRepo.Name,
-                dataOfCreation = userFromRepo.DateOfCreation,
+                dateOfCreation = userFromRepo.DateOfCreation,
                 gender = userFromRepo.Gender,
                 lastTimeActive = userFromRepo.DateOfCreation,
                 dateOfBirth = userFromRepo.DateOfBirth,
+                mainPhoto = userFromRepo.MainPhoto
             });
+
+            // var userToReturn = mapper.Map<UserToListDto>(userFromRepo);
+
+            // return Ok(userToReturn);
 
             // will send him the id so he can take it and 
 

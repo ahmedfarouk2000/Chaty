@@ -19,6 +19,7 @@ namespace backend.Dtos
         public bool Gender { get; set; } // true means male , false is female
 
         public DateTime DateOfBirth { get; set; } // not null
+        public int? ChatsLength {get; set;}  // very very optional 
 
 
 

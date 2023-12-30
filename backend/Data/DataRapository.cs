@@ -12,6 +12,7 @@ namespace backend.Data
     public class DataRapository : IDataRepository
     {
         public readonly DataContext context;
+        
         public DataRapository(DataContext context)
         {
             this.context = context;
@@ -28,13 +29,13 @@ namespace backend.Data
 
         public async Task<User> GetUser(int id)
         {
-            var user = await context.Users.Include(p => p.Chats).Include(p => p.MainPhoto).FirstOrDefaultAsync(u => u.Id == id);
+            var user = await context.Users.Include(p => p.MainPhoto).FirstOrDefaultAsync(u => u.Id == id);
             return user;
         }
 
         public async Task<PagedList<User>> GetUsers(UserParams userParams)
         {
-            var users = context.Users.Include(p => p.Chats).Include(p => p.MainPhoto)
+            var users = context.Users.Include(p => p.MainPhoto)
             .OrderByDescending(u => u.LastTimeActive).AsQueryable();
             users = users.Where(u => u.Gender == userParams.Gender && u.Id !=userParams.UserId); // will get this from the paramters
 

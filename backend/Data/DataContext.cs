@@ -13,13 +13,12 @@ namespace backend.Data
 
 
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
-        public DbSet<Value> Values { get; set; } // V   alues is the database name  
-        public DbSet<User> Users { get; set; } // V   alues is the database name 
-        public DbSet<Chat> Chats { get; set; } // V   alues is the database name 
+        public DbSet<User> Users { get; set; } // must asjust the model
+        // public DbSet<Chat> Chats { get; set; } // can remove it
 
-        public DbSet<MainPhoto> MainPhotos { get; set; } // all current main photos
-        public DbSet<Message> Messages {get; set;}
+        public DbSet<MainPhoto> MainPhotos { get; set; } // needed
+        public DbSet<Message> Messages {get; set;} // needed
 
-        public DbSet<Chaty> Chatys {get; set;}
+        public DbSet<Chaty> Chatys {get; set;} //  needed
     }
 }

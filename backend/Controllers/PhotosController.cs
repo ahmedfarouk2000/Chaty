@@ -43,105 +43,105 @@ namespace backend.Controllers
             cloudinary = new Cloudinary(account);
         }
 
-        [HttpPost("{userId}")]
-        public async Task<IActionResult> AddPhotoForUser(int userId, [FromForm] PhotoForCreationDto photoForCreationDto)
-        {
-            // if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
-            //     return Unauthorized();       
+        // [HttpPost("{userId}")]
+        // public async Task<IActionResult> AddPhotoForUser(int userId, [FromForm] PhotoForCreationDto photoForCreationDto)
+        // {
+        //     // if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+        //     //     return Unauthorized();       
 
-            var user = await repo.GetUser(userId);
+        //     var user = await repo.GetUser(userId);
 
-            var file = photoForCreationDto.File;
+        //     var file = photoForCreationDto.File;
 
-            var uploadResult = new ImageUploadResult();
+        //     var uploadResult = new ImageUploadResult();
 
-            if (file.Length > 0)
-            {
+        //     if (file.Length > 0)
+        //     {
 
-                using (var stream = file.OpenReadStream())
-                {
+        //         using (var stream = file.OpenReadStream())
+        //         {
 
-                    var uploadParam = new ImageUploadParams()
-                    {
-                        File = new FileDescription(file.Name, stream),
-                        // Transformation = new Transformation().Width(500).Height(500).Crop("fill").Gravity("face")
+        //             var uploadParam = new ImageUploadParams()
+        //             {
+        //                 File = new FileDescription(file.Name, stream),
+        //                 // Transformation = new Transformation().Width(500).Height(500).Crop("fill").Gravity("face")
 
-                    };
+        //             };
 
-                    uploadResult = cloudinary.Upload(uploadParam);
-
-
-                }
-            }
-
-            photoForCreationDto.Content = uploadResult.Uri.ToString();
-            photoForCreationDto.ContentType = "photo";
-            photoForCreationDto.ImagePublicId = uploadResult.PublicId;
-
-            var photo = mapper.Map<Chat>(photoForCreationDto);
-
-            user.Chats.Add(photo);
-
-            if (await repo.SaveAll())
-            {
-                var photoToReturn = mapper.Map<PhotoForReturnDto>(photo);
-                return Ok();
-
-            }
-
-            return BadRequest("Could not adddddddddd photo bro");
+        //             uploadResult = cloudinary.Upload(uploadParam);
 
 
-        }
+        //         }
+        //     }
+
+        //     photoForCreationDto.Content = uploadResult.Uri.ToString();
+        //     photoForCreationDto.ContentType = "photo";
+        //     photoForCreationDto.ImagePublicId = uploadResult.PublicId;
+
+        //     var photo = mapper.Map<Chat>(photoForCreationDto);
+
+        //     // user.Chats.Add(photo);
+
+        //     if (await repo.SaveAll())
+        //     {
+        //         var photoToReturn = mapper.Map<PhotoForReturnDto>(photo);
+        //         return Ok();
+
+        //     }
+
+        //     return BadRequest("Could not adddddddddd photo bro");
 
 
-        [HttpPost("Videos/{userId}")]
-        public async Task<IActionResult> AddVideoForUser(int userId, [FromForm] PhotoForCreationDto photoForCreationDto)
-        {
-            // if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
-            //     return Unauthorized();
-
-            var user = await repo.GetUser(userId);
-
-            var file = photoForCreationDto.File;
-
-            var uploadResult = new VideoUploadResult();
-
-            if (file.Length > 0)
-            {
-
-                using (var stream = file.OpenReadStream())
-                {
-
-                    var uploadParam = new VideoUploadParams
-                    {
-                        File = new FileDescription(file.Name, stream),
-                        // PublicId = "video_upload_example"
-                    };
-
-                    uploadResult = cloudinary.UploadLarge(uploadParam);
-                }
-            }
-
-            photoForCreationDto.Content = uploadResult.Uri.ToString();
-            photoForCreationDto.ContentType = "video";
-            photoForCreationDto.ImagePublicId = uploadResult.PublicId;
-
-            var photo = mapper.Map<Chat>(photoForCreationDto);
-
-            user.Chats.Add(photo);
-
-            if (await repo.SaveAll())
-            {
-                var photoToReturn = mapper.Map<PhotoForReturnDto>(photo);
-                return CreatedAtRoute("GetPhoto", new { userId = userId, id = photo.Id }, photoToReturn);
-
-            }
-
-            return BadRequest("Could not adddddddddd photo bro");
+        // }
 
 
-        }
+        // [HttpPost("Videos/{userId}")]
+        // public async Task<IActionResult> AddVideoForUser(int userId, [FromForm] PhotoForCreationDto photoForCreationDto)
+        // {
+        //     // if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+        //     //     return Unauthorized();
+
+        //     var user = await repo.GetUser(userId);
+
+        //     var file = photoForCreationDto.File;
+
+        //     var uploadResult = new VideoUploadResult();
+
+        //     if (file.Length > 0)
+        //     {
+
+        //         using (var stream = file.OpenReadStream())
+        //         {
+
+        //             var uploadParam = new VideoUploadParams
+        //             {
+        //                 File = new FileDescription(file.Name, stream),
+        //                 // PublicId = "video_upload_example"
+        //             };
+
+        //             uploadResult = cloudinary.UploadLarge(uploadParam);
+        //         }
+        //     }
+
+        //     photoForCreationDto.Content = uploadResult.Uri.ToString();
+        //     photoForCreationDto.ContentType = "video";
+        //     photoForCreationDto.ImagePublicId = uploadResult.PublicId;
+
+        //     var photo = mapper.Map<Chat>(photoForCreationDto);
+
+        //     // user.Chats.Add(photo);
+
+        //     if (await repo.SaveAll())
+        //     {
+        //         var photoToReturn = mapper.Map<PhotoForReturnDto>(photo);
+        //         return CreatedAtRoute("GetPhoto", new { userId = userId, id = photo.Id }, photoToReturn);
+
+        //     }
+
+        //     return BadRequest("Could not adddddddddd photo bro");
+
+
+        // }
 
 
 
@@ -164,7 +164,7 @@ namespace backend.Controllers
 
         [HttpPost("MainPhoto/{userId}")]
         public async Task<IActionResult> AddMainPhotoForUser(int userId, [FromForm] PhotoForCreationDto photoForCreationDto)
-        {
+        { // needed
             // if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
             //     return Unauthorized();
 
@@ -217,7 +217,7 @@ namespace backend.Controllers
 
         [HttpGet("{id}", Name = "GetMainPhoto")]
         public async Task<IActionResult> GetMainPhoto(int id)
-        {
+        { // needed
 
             var photoFromRepo = await repo.GetMainPhoto(id);
 
@@ -229,7 +229,7 @@ namespace backend.Controllers
 
 
         [HttpGet("MainPhoto/Remove/{userId}")]
-        public async Task<IActionResult> RemoveMainPhotoForUser(int userId){
+        public async Task<IActionResult> RemoveMainPhotoForUser(int userId){ // needed
             var removedPhoto = await repo.RemoveMainPhoto(userId) ;
             return Ok(removedPhoto) ;
         }

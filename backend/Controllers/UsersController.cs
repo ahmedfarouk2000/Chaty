@@ -24,10 +24,12 @@ namespace backend.Controllers
 
         private readonly IDataRepository repo;
         private readonly IMapper mapper;
-        public UsersController(IDataRepository repo, IMapper mapper)
+        private readonly IMessageService messageService ;
+        public UsersController(IDataRepository repo, IMapper mapper , IMessageService messageService)
         {
             this.repo = repo;
             this.mapper = mapper;
+            this.messageService = messageService;
         }
 
         [HttpGet] // NOT NEEDED TO BE AUTH
@@ -43,11 +45,40 @@ namespace backend.Controllers
 
 
             var users = await repo.GetUsers(userParams);
-            var usersToReturn = mapper.Map<IEnumerable<UserToListDto>>(users);
+
+            // var usersWithLength = new IEnumerable<UserToListDto>() ;
+            var usersWithLength = new List<UserToListDto>();
+
+
+            foreach (var user in users)
+            {
+
+                GetMessagesDto messagesDto = new GetMessagesDto
+                {
+                    SenderId = userParams.UserId,
+                    ReceiverId = user.Id
+                };
+
+                List<MessageWithSenderViewModel> allMessages = await messageService.getAllMessages(messagesDto);
+                int chatLength =  allMessages.Count;
+
+                usersWithLength.Add(new UserToListDto{
+                    Id = user.Id,
+                    Name = user.Name,
+                    MainPhoto = user.MainPhoto,
+                    DateOfCreation= user.DateOfCreation,
+                    LastTimeActive = user.LastTimeActive,
+                    Gender =  user.Gender,
+                    DateOfBirth = user.DateOfBirth,
+                    ChatsLength = chatLength
+                });      
+            }
+
+            //var usersToReturn = mapper.Map<IEnumerable<UserToListDto>>(users);
 
             Response.AddPagination(users.CurrentPage, users.PageSize, users.TotalCount, users.TotalPages);
 
-            return Ok(usersToReturn);
+            return Ok(usersWithLength);
         }
 
         // [Authorize] //searches for the "Authorize: Bearer" in the header of the request 

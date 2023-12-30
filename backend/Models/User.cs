@@ -11,7 +11,7 @@ namespace backend.Models
         public string Name { get; set; }
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
-        public ICollection<Chat> Chats { get; set; }
+        // public ICollection<Chat> Chats { get; set; }
 
         public MainPhoto? MainPhoto { get; set; } // used to display the image of the user
 
