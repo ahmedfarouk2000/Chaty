@@ -7,12 +7,12 @@ import { User } from '../models/user';
   providedIn: 'root',
 })
 export class AuthService {
-  public baseUrl: string = 'http://localhost:5288/auth';
+  baseUrl: string = 'http://localhost:5288/auth';
 
-  public SenderData = new BehaviorSubject<any>({}); // the sender
+  SenderData = new BehaviorSubject<any>({}); // the sender
 
-  public senderUser: User;
-  public receiverUser: User;
+  senderUser: User;
+  receiverUser: User;
   @Input() SenderUser = new EventEmitter<User>(); // New
   @Input() ReceiverUser = new EventEmitter<User>(); // New
 
@@ -26,28 +26,29 @@ export class AuthService {
     this.ReceiverUser.emit(user);
   }
 
-  // public SelectChatReceiver = (userData: any) => {
+  // SelectChatReceiver = (userData: any) => {
   //   this.ReceiverData.next(userData);
   // };
 
   constructor(private http: HttpClient) {}
 
-  public register(user: any): Observable<any> {
+  register(user: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/register`, user);
   }
 
-  public login(user: any): Observable<any> {
+  login(user: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/login`, user);
   }
 
-  public IsLoggedIn = () => {
+  IsLoggedIn = () => {
     const token = localStorage.getItem('token');
     return !!token;
   };
 
-  public LogOut = () => {
-    //// to logout
+  LogOut = () => {
     const token = localStorage.removeItem('token');
+    const senderData = localStorage.removeItem('SenderData');
+    const receiverData = localStorage.removeItem('ReceiverData');
   };
 
   getCurrentLoggedUser(): string | undefined {

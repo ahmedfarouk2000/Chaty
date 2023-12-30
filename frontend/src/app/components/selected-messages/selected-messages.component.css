@@ -34,9 +34,9 @@
   position: relative;
 }
 
-.emoji:hover {
+/* .emoji:hover {
   scale: 1.1;
-}
+} */
 
 .emoji input {
   position: absolute;

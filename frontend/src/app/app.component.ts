@@ -195,5 +195,12 @@ export class AppComponent {
         '../assets/icons/film.svg'
       )
     );
+
+    this.matIconRegistry.addSvgIcon(
+      'logout',
+      this.domainSanitizer.bypassSecurityTrustResourceUrl(
+        '../assets/icons/logout.svg'
+      )
+    );
   }
 }

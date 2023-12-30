@@ -21,6 +21,7 @@
   /* border: white solid 2px; */
   border-radius: 32px;
   /* width: ; */
+  word-wrap: break-word;
 }
 
 .emoji mat-icon {

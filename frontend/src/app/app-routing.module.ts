@@ -18,7 +18,7 @@ const routes: Routes = [
   {
     path: 'users/:id',
     component: ChatInputComponent,
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     resolve: {
       inBetweenChatData: UsersDataResolver, // sender and receiver
     },
@@ -34,6 +34,7 @@ const routes: Routes = [
   {
     path: 'users',
     component: AllUsersComponent,
+    canActivate: [AuthGuard],
     resolve: {
       users: MyDataResolver,
     },

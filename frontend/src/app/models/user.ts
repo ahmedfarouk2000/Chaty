@@ -9,4 +9,5 @@ export interface User {
   lastTimeActive: Date;
   token?: string;
   mainPhoto?: mainPhoto;
+  chatsLength?: number;
 }

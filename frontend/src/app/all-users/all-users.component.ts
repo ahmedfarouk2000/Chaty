@@ -104,4 +104,9 @@ export class AllUsersComponent {
   ClickToToggleEdit = () => {
     this.isUserSettingsOpened = !this.isUserSettingsOpened;
   };
+
+  logout = () => {
+    this.authService.LogOut();
+    this.router.navigate([`/login`]);
+  };
 }

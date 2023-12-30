@@ -1,10 +1,15 @@
 .chatInput {
-  padding: 22px;
+  /* padding: 22px; */
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 8px;
   cursor: pointer;
+  /* background-color: red; */
+}
+
+.title:hover {
+  background-color: #42506135;
 }
 
 .title {
@@ -12,6 +17,12 @@
   letter-spacing: 1.5px;
   color: black;
   cursor: pointer;
+  flex: 1;
+  /* background-color: green; */
+  height: 100%;
+  padding: 16px;
+  text-align: center;
+  transition: all 0.2s ease-in-out;
 }
 
 .emoji img {
@@ -27,6 +38,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  /* background-color: green; */
+  padding: 22px;
 }
 
 .emojiNew {
@@ -44,9 +57,9 @@
   pointer-events: none;
 }
 
-.emoji:hover {
+/* .emoji:hover {
   scale: 1.1;
-}
+} */
 
 .emoji input {
   position: absolute;

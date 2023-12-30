@@ -165,7 +165,7 @@
 
 .header {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   text-align: center;
   padding: 16px;
@@ -248,8 +248,8 @@
 }
 
 .mainImage {
-  width: 60px;
-  height: 60px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   outline: white 4px solid;
   overflow: hidden;
@@ -258,5 +258,19 @@
   align-items: center;
   position: relative;
   padding: 6px;
+  cursor: pointer;
+}
+
+.logout mat-icon {
+  /* width: 100%; */
+  width: 36px;
+  height: 36px;
+}
+.logout {
+  /* background-color: red; */
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
 }

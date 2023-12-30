@@ -21,16 +21,12 @@
       />
     </div>
 
-    <app-user-settings
-      [UserData]="currentUser"
-      [isUserSettingsOpened]="isUserSettingsOpened"
-      [senderId]="currentUser.id"
-      (onClickToCloseEdit)="ClickToToggleEdit()"
-    ></app-user-settings>
-
     <div class="header-wrapper">
       <h1>Welcome back {{ currentUser?.name }}</h1>
-      <!-- <h1 class="name">{{ getCurrentLogedUser }}</h1> -->
+    </div>
+
+    <div class="logout" (click)="logout()">
+      <mat-icon svgIcon="logout"></mat-icon>
     </div>
   </div>
 
@@ -68,7 +64,6 @@
         (click)="ToggleOrderBy('active')"
         [ngClass]="this.OrderBy == 'active' ? 'GenderSelected' : ''"
       >
-        <!-- <mat-icon class="genderIcon" svgIcon="gender-female"></mat-icon> -->
         <h1>active</h1>
       </div>
     </div>
@@ -103,7 +98,7 @@
         <div class="containerFlex">
           <div class="nuOfChats">
             <mat-icon svgIcon="chat"></mat-icon>
-            <h3>{{ currentUser?.chats?.length }}</h3>
+            <h3>{{ currentUser?.chatsLength }}</h3>
           </div>
 
           <div class="nuOfChats">
@@ -176,4 +171,11 @@
       <mat-icon svgIcon="arrowLeftDouble"></mat-icon>
     </div>
   </div>
+
+  <app-user-settings
+    [UserData]="currentUser"
+    [isUserSettingsOpened]="isUserSettingsOpened"
+    [senderId]="currentUser.id"
+    (onClickToCloseEdit)="ClickToToggleEdit()"
+  ></app-user-settings>
 </div>

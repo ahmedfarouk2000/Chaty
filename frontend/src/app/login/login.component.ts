@@ -17,33 +17,27 @@ export class LoginComponent {
     private authService: AuthService,
     private dataService: DataService
   ) {}
-  public currentUserData: any = '';
 
-  public loginForm: FormGroup;
+  loginForm: FormGroup;
 
   ngOnInit() {
-    // this.authService.currentUserData.subscribe(
-    //   (currentUserData) => (this.currentUserData = currentUserData)
-    // );
-    // console.log('current user', this.currentUserData);
-
     this.loginForm = this.fb.group({
-      username: [this.currentUserData.name, [Validators.required]],
+      username: ['', [Validators.required]],
       password: ['password', Validators.required],
     });
   }
 
-  public goToRegister = () => {
+  goToRegister = () => {
     this.router.navigate(['/register']);
   };
 
-  public goToAllUsers = () => {
+  goToAllUsers = () => {
     this.router.navigate(['/users']);
   };
 
-  public isWrongPassword = false;
+  isWrongPassword = false;
 
-  public Login = () => {
+  Login = () => {
     if (this.loginForm.valid) {
       this.authService.login(this.loginForm.value).subscribe({
         next: (data: User) => {

@@ -1,179 +1,170 @@
 body {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 .firstContainer {
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .icon {
-    background-color: #425061;
-    width: 64px;
-    overflow: hidden;
+  background-color: #425061;
+  width: 72px;
+  height: 72px;
+  overflow: hidden;
 
-    border-radius: 50%;
-    border: white 6px solid;
-    padding: 10px;
+  border-radius: 50%;
+  border: white 6px solid;
+  padding: 16px;
 
-    position: absolute;
-    left: 50%;
-    bottom: 100%;
-    transform: translate(-50%, 50%);
-    transition: all 0.6s;
+  position: absolute;
+  left: 50%;
+  bottom: 100%;
+  transform: translate(-50%, 50%);
+  transition: all 0.6s;
 }
 
-
-
 .icon:hover {
-    background-color: rgb(39, 48, 58);
+  background-color: rgb(39, 48, 58);
 }
 
 .icon img {
-    width: 100%;
+  width: 100%;
 }
 
 .Input {
-    width: 70%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 8px;
-    padding: 8px;
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px;
 }
 
 .error {
-    color: red;
-    font-weight: 400;
+  color: red;
+  font-weight: 400;
 }
 
-
 .inputs {
-    display: flex;
-    flex-direction: column;
-    background-color: white;
-    /* padding: 50px 10px; */
-    /* height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  /* padding: 50px 10px; */
+  /* height: 100%;
     width: 100%; */
-    min-width: 600px;
-    min-height: 400px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    gap: 10px;
-    padding: 50px 20px;
-    box-shadow: 0 0 20px rgb(33 33 33 / 20%);
-    position: relative;
-    border-radius: 32px;
-
+  min-width: 600px;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  gap: 10px;
+  padding: 50px 20px;
+  box-shadow: 0 0 20px rgb(33 33 33 / 20%);
+  position: relative;
+  border-radius: 32px;
 }
 
 .userInput {
-    position: relative;
-    /* margin: 10px; */
-    /* width: 70%; */
-    /* background-color: red; */
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  position: relative;
+  /* margin: 10px; */
+  /* width: 70%; */
+  /* background-color: red; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .usernameIcon {
-    position: absolute;
-    left: 3%;
-    top: 50%;
-    transform: translate(0%, -50%);
-
+  position: absolute;
+  left: 3%;
+  top: 50%;
+  transform: translate(0%, -50%);
 }
 
 .submitButton {
-    width: 70%;
-    padding: 16px;
-    background-color: #425061;
-    color: white;
-    outline: none;
-    border: none;
-    border-radius: 16px;
-    color: white;
-    font-weight: 300;
-    font-size: x-large;
-    transition: all 0.6s;
-    cursor: pointer;
-
+  width: 70%;
+  padding: 16px;
+  background-color: #425061;
+  color: white;
+  outline: none;
+  border: none;
+  border-radius: 16px;
+  color: white;
+  font-weight: 300;
+  font-size: x-large;
+  transition: all 0.6s;
+  cursor: pointer;
 }
 
 .submitButton:hover {
-    background-color: rgb(39, 48, 58);
+  background-color: rgb(39, 48, 58);
 }
 
 input {
-    padding: 16px;
-    color: black;
-    font-size: large;
-    font-weight: 700;
-    border-radius: 16px;
-    padding-left: 50px;
-    transition: all 0.4s;
-    outline: none !important;
-    border: 1px solid gray;
-    width: 100%;
+  padding: 16px;
+  color: black;
+  font-size: large;
+  font-weight: 700;
+  border-radius: 16px;
+  padding-left: 50px;
+  transition: all 0.4s;
+  outline: none !important;
+  border: 1px solid gray;
+  width: 100%;
 }
 
-
 input:focus {
-    outline: none !important;
-    box-shadow: 0 0 10px #425061;
+  outline: none !important;
+  box-shadow: 0 0 10px #425061;
 }
 
 .checkbox {
-    width: 70%;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    /* background-color: red; */
-    gap: 15px;
-    /* align-self: flex-start; */
-    transition: all 0.4s;
+  width: 70%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  /* background-color: red; */
+  gap: 15px;
+  /* align-self: flex-start; */
+  transition: all 0.4s;
 }
 
 .checkbox:focus {
-    background-color: red;
+  background-color: red;
 }
 
 .checkboxInput {
-    width: 20px;
-    height: 20px;
-    padding: 3px;
-    accent-color: gray;
-
+  width: 20px;
+  height: 20px;
+  padding: 3px;
+  accent-color: gray;
 }
 
 .text {
-    color: gray;
+  color: gray;
 }
 
 .Title {
-    font-size: 32px;
-
+  font-size: 32px;
 }
 
 .route {
-    all: unset;
-    font-size: 22px;
-
+  all: unset;
+  font-size: 22px;
 }
 
 .routeParent {
-    display: flex;
-    column-gap: 8px;
+  display: flex;
+  column-gap: 8px;
 }
 
 .link {
-    cursor: pointer;
-    font-weight: 900;
-    text-decoration: underline;
+  cursor: pointer;
+  font-weight: 900;
+  text-decoration: underline;
 }

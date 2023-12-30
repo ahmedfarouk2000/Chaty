@@ -20,5 +20,6 @@ export class InfoComponent {
 
   backToAllUsers = () => {
     this.router.navigate(['/users']);
+    const receiverData = localStorage.removeItem('ReceiverData');
   };
 }
