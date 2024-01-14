@@ -59,7 +59,8 @@ namespace backend.Data
                 return mappedMessage ;
             }
 
-            else if(message.ContentType == ContentType.Image || message.ContentType == ContentType.Video ){
+            else if(message.ContentType == ContentType.Image || message.ContentType == ContentType.Video 
+                ||  message.ContentType == ContentType.Sound){
                 
                 var file = message?.File;
 
@@ -80,7 +81,7 @@ namespace backend.Data
                             uploadResultImage = cloudinary.Upload(uploadParam);
                         }
 
-                        else if(message.ContentType == ContentType.Video){ 
+                        else if(message.ContentType == ContentType.Video || message.ContentType == ContentType.Sound){ 
                             var uploadParam = new VideoUploadParams
                             {
                                 File = new FileDescription(file.Name, stream),
