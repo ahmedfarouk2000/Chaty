@@ -2,7 +2,13 @@
   <div class="emoji" (click)="backToAllUsers()">
     <mat-icon svgIcon="arrowLeft"></mat-icon>
   </div>
-  <h1 class="title">{{ receiverData?.name }}</h1>
+
+  <div class="title-container">
+    <h1 class="name">{{ receiverData?.name }}</h1>
+    <h1 class="last-seen">
+      Last Seen: {{ receiverData?.lastTimeActive | dateAgo }}
+    </h1>
+  </div>
 
   <div class="emoji">
     <img

@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ChatInputComponent } from './chat-input/chat-input.component';
+import { ChatComponent } from './chat/chat.component';
 import { InfoComponent } from './info/info.component';
 
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -23,13 +23,10 @@ import { SelectedMessagesComponent } from './components/selected-messages/select
 // import { TimeAgoPipe } from 'time-ago-pipe';
 // import { TimeagoPipe } from 'ngx-timeago'; // Import from 'ngx-timeago'
 
-
-
-
 @NgModule({
   declarations: [
     AppComponent,
-    ChatInputComponent,
+    ChatComponent,
     InfoComponent,
     LoginComponent,
     RegisterComponent,
@@ -50,11 +47,13 @@ import { SelectedMessagesComponent } from './components/selected-messages/select
 
     // FileUploadModule
   ],
-  providers: [{
-    provide: HTTP_INTERCEPTORS,
-    useClass: AuthTokenInterceptor,
-    multi: true
-  }],
-  bootstrap: [AppComponent]
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthTokenInterceptor,
+      multi: true,
+    },
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

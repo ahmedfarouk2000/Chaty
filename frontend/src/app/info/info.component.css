@@ -8,21 +8,36 @@
   /* background-color: red; */
 }
 
-.title:hover {
+.title-container:hover {
   background-color: #42506135;
 }
 
-.title {
+.title-container {
+  padding: 8px;
+  height: 100%;
+  text-align: center;
+  cursor: pointer;
+  flex: 1;
+  border-radius: 40px;
+  transition: all 0.2s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  row-gap: 12px;
+}
+
+.name {
   font-size: 22px;
   letter-spacing: 1.5px;
   color: black;
-  cursor: pointer;
-  flex: 1;
-  /* background-color: green; */
-  height: 100%;
-  padding: 16px;
-  text-align: center;
-  transition: all 0.2s ease-in-out;
+}
+
+.last-seen {
+  font-size: 14px;
+  letter-spacing: 1px;
+  color: black;
+  opacity: 0.5;
 }
 
 .emoji img {

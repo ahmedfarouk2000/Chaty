@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { DataService } from '../Services/data.service';
 import { AuthService } from '../Services/auth.service';
 import { ActivatedRoute } from '@angular/router';
@@ -11,21 +11,20 @@ import { User } from '../models/user';
 // import { FileUploader } from 'ng2-file-upload';
 
 @Component({
-  selector: 'app-chat-input',
-  templateUrl: './chat-input.component.html',
-  styleUrls: ['./chat-input.component.css'],
+  selector: 'app-chat',
+  templateUrl: './chat.component.html',
+  styleUrls: ['./chat.component.css'],
 })
-export class ChatInputComponent {
+export class ChatComponent {
   isUserSettingsOpened: boolean = false;
 
-  public CurrentUser: any = {};
+  CurrentUser: any = {};
 
-  public CurrentUserId: number = 0;
+  CurrentUserId: number = 0;
 
   constructor(
     private dataService: DataService,
     private authService: AuthService,
-    private cdr: ChangeDetectorRef,
     private route: ActivatedRoute,
     private messageService: MessageService
   ) {}
@@ -37,6 +36,17 @@ export class ChatInputComponent {
   senderData: User;
   receiverData: User;
 
+  message: string = ''; // will hold what written on the screen
+
+  isAttatchPopUpOpen = false;
+
+  ngOnInit(): void {
+    this.InitiateUsersDataAndChat();
+    console.log('the reviever is: ', this.allMessagesBetween);
+
+    this.CurrentUserId = this.route.snapshot.params?.['id']; // to get the id from the url itself
+  }
+
   toggleSelectionMessage(item: MessageWithSenderViewModel) {
     if (item.messageSenderId == this.senderData?.id) {
       if (this.selectedMessages.includes(item)) {
@@ -47,7 +57,6 @@ export class ChatInputComponent {
         this.selectedMessages.push(item);
       }
     }
-    console.log('selected are: ', this.selectedMessages);
   }
 
   isMessageSelected(item: MessageWithSenderViewModel): boolean {
@@ -75,12 +84,6 @@ export class ChatInputComponent {
       });
   }
 
-  ngOnInit(): void {
-    this.InitiateUsersDataAndChat();
-    console.log('the reviever is: ', this.receiverData);
-
-    this.CurrentUserId = this.route.snapshot.params?.['id']; // to get the id from the url itself
-  }
   InitiateUsersDataAndChat() {
     this.route.data.subscribe((data) => {
       this.senderData = data['inBetweenChatData'].Sender;
@@ -88,13 +91,6 @@ export class ChatInputComponent {
       this.allMessagesBetween = data['inBetweenChatData'].allMessagesBetween;
     });
   }
-
-  // public updateLastTimeActive = () => {
-  //   const currentDate = new Date();
-  //   currentDate.setHours(currentDate.getHours() + 3);
-  //   this.CurrentUser.lastTimeActive = currentDate.toISOString().slice(0, 19);
-  //   this.updateUserData();
-  // };
 
   getAllMessagesInBetween() {
     // NEW
@@ -107,6 +103,7 @@ export class ChatInputComponent {
       next: (data: MessageWithSenderViewModel[]) => {
         this.allMessagesBetween = data;
         this.ScrollDown();
+        this.closeAttached();
       },
       error: () => {
         console.log('errrrrrrrror');
@@ -114,7 +111,7 @@ export class ChatInputComponent {
     });
   }
 
-  public updateUserData() {
+  updateUserData() {
     // maybe
     console.log('the curresnt user update', this.CurrentUser);
 
@@ -154,86 +151,12 @@ export class ChatInputComponent {
     });
   }
 
-  public message: string = ''; // will hold what written on the screen
-
-  public isAttatchPopUpOpen = false;
-
-  public sound: HTMLAudioElement = new Audio();
-
-  public ChangeCurrentMoment = (e: any, currentTime: any) => {
-    // sound
-    currentTime.sound.currentTime = e.target.value;
-  };
-
-  public playSound = (input: any) => {
-    // sound
-    if (!input.isPlaying) {
-      input.sound.play();
-      input.isPlaying = true;
-
-      input.interval = setInterval(() => {
-        this.cdr.detectChanges();
-        console.log(input.duration);
-        if (input.sound.currentTime == input.duration) {
-          // this means its finished
-          console.log('finisheddddddd');
-          clearInterval(input.interval);
-          input.isPlaying = false;
-        }
-      }, 1000);
-    } else {
-      // means already is playing thus stop it
-      input.sound.pause();
-      input.isPlaying = false;
-
-      clearInterval(input.interval);
-    }
-  };
-
-  public ToInteger = (input: number) => {
-    // sound
-    let result = Math.trunc(input);
-    if (result.toString().length == 1) return '0' + result;
-    return result;
-  };
-
-  handleSoundInput(input: any) {
-    // sound
-    const file: File = input.files[0];
-    if (file) {
-      this.sound = new Audio();
-      this.sound.src = URL.createObjectURL(file);
-      console.log('Selected sound file:', file.name);
-
-      setTimeout(() => {
-        // this somtimes cause problem for the duration if not loaded thus will reulst NAN
-        // this.CurrentUser.chats.push({ Content: { sound: this.sound, isPlaying: false, duration: this.sound.duration, interval: '' }, type: 'sound', isSelected: false, time: new Date(), ImagePublicId: null })
-        this.CurrentUser.chats.push({
-          content: {
-            sound: this.sound,
-            isPlaying: false,
-            duration: this.sound.duration,
-            interval: '',
-            fileName: file.name,
-          },
-          contentType: 'sound',
-          date: new Date(),
-          userId: this.CurrentUserId,
-          ImagePublicId: null,
-        });
-
-        this.ScrollDown();
-        this.toggleAttached();
-      }, 500);
-    }
-  }
-
-  public SaveValue = (e: any) => {
+  SaveValue = (e: any) => {
     // needed
     this.message = e.target.value;
   };
 
-  public ShowMessage = () => {
+  ShowMessage = () => {
     // needed
     if (this.message !== '') {
       this.sendTextMessage(); // The new one
@@ -241,12 +164,15 @@ export class ChatInputComponent {
       this.ScrollDown();
     }
   };
-  public toggleAttached = () => {
-    // image
+  toggleAttached = () => {
     this.isAttatchPopUpOpen = !this.isAttatchPopUpOpen;
   };
 
-  public GetCurrentTime = (date: Date): string[] => {
+  closeAttached = () => {
+    this.isAttatchPopUpOpen = false;
+  };
+
+  GetCurrentTime = (date: Date): string[] => {
     const CurrentDate = new Date(date);
     const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     const CurrentDayIndex = CurrentDate.getDay(); // will return a the index of the day
@@ -257,7 +183,6 @@ export class ChatInputComponent {
         : CurrentDate.getHours();
     let minutes = CurrentDate.getMinutes().toString();
     let duration = CurrentDate.getHours() > 12 ? 'PM' : 'AM';
-    // let minutesUpdated = ''
     if (minutes.length == 1) minutes = '0' + minutes;
     const timeNow = `${hours}:${minutes} ${duration}`;
     const toReturn: string[] = [timeNow, daysOfWeek[CurrentDayIndex]];
@@ -265,7 +190,7 @@ export class ChatInputComponent {
     return toReturn;
   };
 
-  public EnterKeyPressed = (e: any) => {
+  EnterKeyPressed = (e: any) => {
     // needed
     if (e.key == 'Enter') {
       this.ShowMessage();
@@ -284,4 +209,8 @@ export class ChatInputComponent {
   ClickToToggleEdit = () => {
     this.isUserSettingsOpened = !this.isUserSettingsOpened;
   };
+
+  updateTerms(event: any) {
+    this.message = event.target.innerText;
+  }
 }

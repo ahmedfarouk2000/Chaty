@@ -197,6 +197,7 @@
   bottom: 0;
   background-color: #42506161;
   transition: 0.65s all ease-in-out;
+  z-index: 1;
 }
 .layer-over-selected {
   clip-path: circle(200% at 100% 0);

@@ -21,7 +21,6 @@ export class AttatchComponent {
   isUploadingImage: boolean = false;
   isUploadingImageFailed: boolean = false;
   sendImageMessage(input: any) {
-    // needed
     if (input.files && input.files[0]) {
       const file = input.files[0] as File;
       const reader = new FileReader();
@@ -64,7 +63,6 @@ export class AttatchComponent {
   isUploadingVideo: boolean = false;
   isUploadingVideoFailed: boolean = false;
   sendVideoMessage(input: any) {
-    // needed
     if (input.files && input.files[0]) {
       const file = input.files[0] as File;
       const reader = new FileReader();
@@ -101,6 +99,48 @@ export class AttatchComponent {
     this.isUploadingVideoFailed = true;
     setTimeout(() => {
       this.isUploadingVideoFailed = false;
+    }, 2500);
+  }
+
+  isUploadingSound: boolean = false;
+  isUploadingSoundFailed: boolean = false;
+  sendSoundMessage(input: any) {
+    if (input.files && input.files[0]) {
+      const file = input.files[0] as File;
+      const reader = new FileReader();
+
+      reader.onload = (e: any) => {
+        this.isUploadingSound = true;
+        const formData = new FormData();
+        formData.append('File', file);
+
+        let chat: Chaty = {
+          senderId: this.SenderData?.id,
+          receiverId: this.ReceiverData?.id,
+        };
+
+        this.messageService
+          .sendPhotoMessage(chat, formData, 'sound')
+          .subscribe({
+            next: () => {
+              this.isUploadingSound = false;
+              this.getAllMessagesInBetween.emit();
+            },
+            error: () => {
+              this.isUploadingSound = false;
+              this.toggleUploadSoundFailed();
+            },
+          });
+      };
+
+      reader.readAsDataURL(file);
+    }
+  }
+
+  toggleUploadSoundFailed() {
+    this.isUploadingSoundFailed = true;
+    setTimeout(() => {
+      this.isUploadingSoundFailed = false;
     }, 2500);
   }
 }

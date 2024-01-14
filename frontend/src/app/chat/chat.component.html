@@ -31,7 +31,7 @@
       <div
         class="card"
         [ngClass]="{
-           'sender-bg'  :  item?.messageSenderId == senderData?.id,
+           'sender-bg': item?.messageSenderId == senderData?.id,
         }"
       >
         <h1 *ngIf="item?.contentType == 'text'">{{ item?.content }}</h1>
@@ -48,34 +48,16 @@
           height="240"
           controls
         >
-          <source [src]="item?.content" type="video/mp4" />
+          <source [src]="item?.content" />
         </video>
 
-        <!-- <div class="soundContainer" *ngIf="item.ContentType=='sound'">
-                    <mat-icon svgIcon="play" *ngIf="!item.content.isPlaying"
-                        (click)="playSound(item.content)"></mat-icon>
-                    <mat-icon svgIcon="pause" *ngIf="item.content.isPlaying"
-                        (click)="playSound(item.content)"></mat-icon>
-
-                    <div class="wave">
-                        <input class="rangeSound" type="range" [min]="0" [max]="item.content.duration"
-                            [value]="item.content.sound.currentTime"
-                            (input)="ChangeCurrentMoment($event , item.content)">
-
-
-                        <h1 class="fileName">{{item.content.fileName}}</h1>
-                    </div>
-
-
-                    <span
-                        class="soundTime">{{ToInteger(item.content.sound.currentTime)}}:{{ToInteger(item.content.duration)}}</span>
-
-
-                </div> -->
+        <audio *ngIf="item?.contentType == 'sound'" controls>
+          <source [src]="item?.content" />
+        </audio>
 
         <div class="date">
-          <span>{{ this.GetCurrentTime(item?.date)[1] }}</span>
-          <span>{{ this.GetCurrentTime(item?.date)[0] }}</span>
+          <span>{{ GetCurrentTime(item?.date)[1] }}</span>
+          <span>{{ GetCurrentTime(item?.date)[0] }}</span>
         </div>
       </div>
     </div>
@@ -89,7 +71,7 @@
       (keydown)="EnterKeyPressed($event)"
       class="input"
       type="text"
-      [value]="this.message"
+      [value]="message"
       placeholder="Type Message"
       (input)="SaveValue($event)"
     />
@@ -97,7 +79,7 @@
     <button
       class="emoji emojiNew"
       (click)="ShowMessage()"
-      [disabled]="this.message.length == 0"
+      [disabled]="message.length == 0"
     >
       <mat-icon svgIcon="arrowRight"></mat-icon>
     </button>

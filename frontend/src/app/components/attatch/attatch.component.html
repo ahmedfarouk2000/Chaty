@@ -27,16 +27,18 @@
     </div>
     <h6 class="title">Video</h6>
   </div>
-
-  <!-- <div class="emoji">
+  <div class="attach-container">
+    <div class="emoji">
       <input
         class="inputFile"
-        (input)="handleSoundInput($event.target)"
+        (input)="sendSoundMessage($event.target)"
         type="file"
         accept="audio/*"
       />
       <mat-icon svgIcon="sound"></mat-icon>
-    </div> -->
+    </div>
+    <h6 class="title">Sound</h6>
+  </div>
 </div>
 
 <div
@@ -58,6 +60,18 @@
   <span class="loader" *ngIf="this.isUploadingVideo"></span>
 
   <div class="ErrorContainer" *ngIf="this.isUploadingVideoFailed">
+    <img src="../../assets/images/failedToUpload.png" alt="failed img" />
+    <h1 class="ErrorMessage">Failed to upload</h1>
+  </div>
+</div>
+
+<div
+  class="loader-wrapper"
+  *ngIf="this.isUploadingSound || this.isUploadingSoundFailed"
+>
+  <span class="loader" *ngIf="this.isUploadingSound"></span>
+
+  <div class="ErrorContainer" *ngIf="this.isUploadingSoundFailed">
     <img src="../../assets/images/failedToUpload.png" alt="failed img" />
     <h1 class="ErrorMessage">Failed to upload</h1>
   </div>
