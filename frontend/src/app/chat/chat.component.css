@@ -142,6 +142,14 @@
   gap: 8px;
 }
 
+.noPointerDate {
+  cursor: auto;
+  align-self: center;
+  background-color: #425061a1;
+  box-shadow: none;
+  color: white;
+}
+
 .card h1 {
   font-size: 16px;
 }
@@ -153,22 +161,34 @@
 }
 
 .cardWrap {
-  /* background-color: red; */
   width: 100%;
   display: flex;
-
   border-radius: 16px;
-  /* padding: 4px; */
   cursor: pointer;
   position: relative;
 }
 
+.centerWrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  border-radius: 16px;
+}
+
 .flex-start {
   justify-content: flex-start;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  row-gap: 16px;
 }
 
 .flex-end {
   justify-content: flex-end;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  row-gap: 16px;
 }
 .sender-bg {
   /* background-color: #42506152; */

@@ -31,6 +31,8 @@ export class ChatComponent {
 
   allMessagesBetween: MessageWithSenderViewModel[] = [];
 
+  messagesDatesInBetween: string[] = [];
+
   selectedMessages: MessageWithSenderViewModel[] = [];
 
   senderData: User;
@@ -172,7 +174,7 @@ export class ChatComponent {
     this.isAttatchPopUpOpen = false;
   };
 
-  GetCurrentTime = (date: Date): string[] => {
+  GetCurrentTime = (date: Date): string => {
     const CurrentDate = new Date(date);
     const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     const CurrentDayIndex = CurrentDate.getDay(); // will return a the index of the day
@@ -185,9 +187,37 @@ export class ChatComponent {
     let duration = CurrentDate.getHours() > 12 ? 'PM' : 'AM';
     if (minutes.length == 1) minutes = '0' + minutes;
     const timeNow = `${hours}:${minutes} ${duration}`;
-    const toReturn: string[] = [timeNow, daysOfWeek[CurrentDayIndex]];
+    // const toReturn: string[] = [timeNow, daysOfWeek[CurrentDayIndex]];
 
-    return toReturn;
+    return timeNow;
+  };
+
+  GetCurrentDay = (date: Date): string => {
+    const CurrentDate = new Date(date);
+    const daysOfWeek = [
+      'Sunday',
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+    ];
+    const CurrentDayIndex = CurrentDate.getDay();
+
+    const now = new Date();
+    const oneWeekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+
+    if (CurrentDate >= oneWeekAgo) {
+      return daysOfWeek[CurrentDayIndex];
+    } else {
+      const options: Intl.DateTimeFormatOptions = {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      };
+      return CurrentDate.toLocaleDateString(undefined, options);
+    }
   };
 
   EnterKeyPressed = (e: any) => {
@@ -213,4 +243,20 @@ export class ChatComponent {
   updateTerms(event: any) {
     this.message = event.target.innerText;
   }
+
+  lastInsertedDate: string = '';
+
+  displayDateFirstTime = (currentDate: Date) => {
+    let dateToString = this.GetCurrentDay(currentDate);
+    if (this.isFirstTimeDate(currentDate)) {
+      this.lastInsertedDate = dateToString;
+      return this.lastInsertedDate;
+    }
+    return '';
+  };
+
+  isFirstTimeDate = (currentDate: Date) => {
+    let dateToString = this.GetCurrentDay(currentDate);
+    return dateToString != this.lastInsertedDate;
+  };
 }

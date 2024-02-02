@@ -28,6 +28,12 @@
         }"
       ></div>
 
+      <div class="card noPointerDate" *ngIf="isFirstTimeDate(item?.date)">
+        <h1>
+          {{ displayDateFirstTime(item?.date) }}
+        </h1>
+      </div>
+
       <div
         class="card"
         [ngClass]="{
@@ -56,8 +62,7 @@
         </audio>
 
         <div class="date">
-          <span>{{ GetCurrentTime(item?.date)[1] }}</span>
-          <span>{{ GetCurrentTime(item?.date)[0] }}</span>
+          <span>{{ GetCurrentTime(item?.date) }}</span>
         </div>
       </div>
     </div>
